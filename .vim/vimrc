@@ -1,0 +1,166 @@
+if !has('vim9script') ||  v:version < 900
+  " Needs Vim version 9.0 and above
+  finish
+endif
+
+vim9script
+
+#g:mapleader = "\<Space>"
+#g:maplocalleader = "\<Space>" # meant for certain file types
+#map <BS> <Leader>
+#g:mapleader = ','
+g:maplocalleader = '\\'
+
+# 6=beam, 4=underline, 2=block
+&t_SI = "\e[6 q" #SI = INSERT mode
+&t_SR = "\e[4 q" #SR = REPLACE mode
+&t_EI = "\e[2 q" #EI = NORMAL mode (ALL ELSE)
+# Reset the cursor on start. After suspend-resume, cursor changes to beam even
+# in normal mode. This will prevent that.
+autocmd VimEnter,VimResume * silent execute '!echo -ne "\e[2 q"' | redraw!
+
+# Format usin 'gq'. :h fo-table
+set formatoptions=qjln
+# autocmd FileType * setl formatoptions=qjlron
+
+# Defaults
+source $VIMRUNTIME/defaults.vim
+# disable message from 'defaults.vim' when entering cmdwin
+autocmd! vimHints
+
+# Turn on listchars for Noname/scratch files and non-help files
+# 'listchars' is not local to buffer, only local to window
+autocmd FileType * if &ft =~ '\v(help|markdown)' | setlocal listchars=tab:\ \ ,trail:\  | else | setlocal listchars=tab:\ \ ,trail:· | endif
+autocmd BufEnter * if &ft == null_string | setlocal listchars=tab:\ \ ,trail:\  | endif
+# autocmd BufEnter,FileType * :echom &ft expand('<amatch>') expand('<afile>') 'here'
+set list
+
+set fillchars=vert:│,fold:۰,diff:·,stl:─,stlnc:═,eob:\ 
+
+set clipboard=unnamedplus # Always use the system clipboard
+set mouse= # XXX: Disable mouse (set by defaults.vim). Needed by macos terminal app.
+set number # line numbering
+# set relativenumber
+set hls # highlight search
+set lbr # line break
+set hidden # buffer becomes hidden (not unloaded) when it is abandoned (ex. help buffer)
+set nojoinspaces # suppress inserting two spaces between sentences
+set shortmess+=I # disable startup message
+set report=0 # suppress reporting number of lines changed
+set showmatch # show matching braces when cursor is over them
+set ignorecase # case-insensitive search
+set smartcase # smart search
+set infercase # when doing <c-n/p> completion, respect case
+set splitbelow # open new split panes to right
+set splitright # open new split panes to bottom
+set breakindent # wrapped line will continue visually indented
+set smarttab
+set spellsuggest=best,10 # set maximum number of suggestions listed top 10 items:
+set foldmethod=indent
+set foldnestmax=1
+set nofoldenable # do not do folding when you open file
+set signcolumn=yes # always show column for lsp diagnostics etc
+set complete-=i # disable completing keywords from included files (e.g., #include in C)
+set dictionary+=/usr/share/dict/words
+set whichwrap+=<,>,h,l # make arrows and h, l, push cursor to next line
+# set pumheight=7 # max number of items in popup menu (pmenu)
+set virtualedit=block # allows selection of rectangular text in visual block mode
+set wildignore+=.gitignore,*.swp,*.zwc,tags
+set path=.,,
+set laststatus=2 # always show statusline
+# set laststatus=0
+# set rulerformat=%80(%=%f\ %h%m%r\ %-6y\ %-5.(%l,%c%V%)\ %P%)
+set cursorline
+set textwidth=79
+set cc=+1
+set nowrap
+set shiftwidth=2
+set tabstop=2
+set softtabstop=2
+set expandtab
+set re=1
+set updatetime=100 # reducing updatetime
+set dir=~/tmp
+# set termguicolors
+#set background=dark
+set t_Co=256
+set cmdheight=2
+#colorscheme defaultplus
+#colorscheme hybrid #tangoX, sonoma, seoul256, hybrid_reverse/material, happy_hacking, dzo, clearance
+# colorsbox-stbright/stnight, deep-space, deus, herald, minimalist, seti, solorized, thegoodluck, tuttycolori,
+# visualstudio, wildcharm
+
+# XXX: job_start does not pass --exclude={foo, bar} correctly to shell (because
+# job_start does not spawn a shell, it executes command directly). single quotes
+# also don't work, need double quotes. but all of these work for :grep
+# set grepprg=grep\ --color=never\ -RESIHin\ --exclude="*.git*"\ --exclude="*.swp"\ --exclude="*.zwc"\ --exclude-dir=plugged
+# dot directories like .git are automatically excluded
+# '$*' is a placeholder to replace typed pattern
+#set grepprg=grep\ --color=never\ -REIHin\ $*
+#set grepprg=rg\ $*
+# make grep behave like vimgrep
+# set grepprg=internal
+if executable("rg")
+  set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case\ --follow
+  set grepformat=%f:%l:%c:%m,%f:%l:%m
+else
+  set grepprg=grep\ --color=never\ -REIHin\ $*
+endif
+
+# enable folding at headers in markdown
+g:markdown_folding = 1
+
+syntax on # turn on syntax highlighting
+
+# This loads the "matchit" plugin; It makes the % command more powerful, but
+# bracket matching gets much slower. Vim's default bracket matching does not
+# avoid commented brackets through. and this plugin avoids that.
+if has('syntax') && has('eval')
+    packadd! matchit
+endif
+
+# Suppress netrw banner
+# g:netrw_banner = 0
+
+# Disable this when not debugging Vim (:h :Termdebug)
+packadd! termdebug
+if v:version >= 901 && !getcompletion('comment', 'packadd')->empty()
+    packadd comment
+endif
+
+# FIXME: unable to specify `gitgutter` variables in `opts.vim`.
+# GitGutter opts: {{{
+  g:gitgutter_sign_added = '┃'
+  g:gitgutter_sign_modified = '┃'
+  g:gitgutter_sign_removed = '-'
+  g:gitgutter_sign_removed_first_line = '‾'
+  #g:gitgutter_sign_removed_above_and_below = '▊'
+  g:gitgutter_sign_modified_removed = '~'
+  g:gitgutter_use_location_list = 1
+  g:gitgutter_preview_win_floating = 1
+  g:gitgutter_sign_priority = 1
+  g:gitgutter_grep = 'rg'
+
+# }}}
+
+# FIXME: move to opts.vim
+g:gutentags_modules = ['ctags', 'gtags_cscope']
+# config project root markers.
+g:gutentags_project_root = ['.root']
+# generate datebases in my cache directory, prevent gtags files polluting my project
+g:gutentags_cache_dir = expand('~/.cache/tags')
+# resolve all sym links please!
+g:gutentags_resolve_symlinks = 1
+# change focus to quickfix window after search (optional).
+g:gutentags_plus_switch = 1
+g:gutentags_ctags_exclude = ['install', 'build']
+
+packadd lsp
+packadd vimcomplete
+packadd vim-gitgutter
+packadd vimsuggest
+packadd gutentags_plus
+packadd vim-gutentags
+#packadd vim-misc
+#packadd vim-easytags
+#packadd fzf.vim

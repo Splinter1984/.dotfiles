@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =7
+let g:netrw_dirhist_7='/home/splinter1984/work/zetta-auto-dds-certified/tests/utilities'
+let g:netrw_dirhist_6='/home/splinter1984/.vim/pack/dist/opt/vim-gutentags/doc'
+let g:netrw_dirhist_5='/home/splinter1984/.vim/pack/dist/opt/devdocs.vim/plugin'
+let g:netrw_dirhist_4='/home/splinter1984/.vim/pack/dist/opt/devdocs.vim'
+let g:netrw_dirhist_3='/home/splinter1984/test'
+let g:netrw_dirhist_2='/home/splinter1984/.vim/pack/splinter1984/start'
+let g:netrw_dirhist_1='/home/splinter1984/.vim/pack/splinter1984'
+let g:netrw_dirhist_0='/home/splinter1984/.vim/pack'
+let g:netrw_dirhist_9='/home/splinter1984/.vim'
+let g:netrw_dirhist_8='/home/splinter1984'
