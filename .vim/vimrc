@@ -1,3 +1,8 @@
+" ==============================================================================
+" Maintainer:      Splinter1984 <https://github.com/Splinter1984>
+" Last Change:     Feb 25, 2025
+" ==============================================================================
+
 if !has('vim9script') ||  v:version < 900
   " Needs Vim version 9.0 and above
   finish
