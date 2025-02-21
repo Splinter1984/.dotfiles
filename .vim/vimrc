@@ -168,6 +168,7 @@ packadd vim-gitgutter
 packadd vimsuggest
 packadd gutentags_plus
 packadd vim-gutentags
+packadd vim-shellcheck
 #packadd vim-polyglot
 #packadd jinja2.vim
 #packadd vim-misc
