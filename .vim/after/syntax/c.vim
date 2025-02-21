@@ -51,7 +51,7 @@ endif
 
 
 " Highlight operators
-if get(g:, 'cpp_operator_highlight', 0)
+if get(g:, 'cpp_operator_highlight', 1)
     syn match cOperator "[?!~*&%<>^|=,+]"
     syn match cOperator "[][]"
     syn match cOperator "[^:]\@1<=:[^:]\@="

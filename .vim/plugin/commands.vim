@@ -19,3 +19,14 @@ command HighlightGroupUnderCursor {
         endfor
     endif
 }
+
+command TrailingWhitespaceStrip TrailingWhitespaceStrip()   
+def TrailingWhitespaceStrip()
+    if !&binary && &filetype != 'diff'
+        :normal mz
+        :normal Hmy
+        :%s/\s\+$//e
+        :normal 'yz<CR>
+        :normal `z
+    endif
+enddef

@@ -14,27 +14,26 @@ palette.cterm.window     = "236"
 palette.cterm.selection  = "237"
 palette.cterm.line       = "235"
 palette.cterm.comment    = "243"
-palette.cterm.red        = "167"
+palette.cterm.red        = "1"
 palette.cterm.orange     = "214"
-palette.cterm.orange1    = "130"
-palette.cterm.yellow     = "221"
+palette.cterm.orange1    = "208"
+palette.cterm.yellow     = "3"
 palette.cterm.green      = "2"
 palette.cterm.green1     = "10"
-palette.cterm.aqua       = "109"
-palette.cterm.blue       = "110"
-palette.cterm.purple     = "213"
-palette.cterm.darkcolumn = "234"
-palette.cterm.addbg      = "186"
+palette.cterm.aqua       = "6"
+palette.cterm.blue       = "4"
+palette.cterm.purple     = "5"
+palette.cterm.addbg      = "2"
 palette.cterm.addfg      = "2"
-palette.cterm.changebg   = "175"
+palette.cterm.changebg   = "5"
 palette.cterm.changefg   = "5"
-palette.cterm.delbg      = "167"
+palette.cterm.delbg      = "1"
 palette.cterm.delfg      = "1"
-palette.cterm.textfg     = "152"
-palette.cterm.darkblue   = "17"
-palette.cterm.darkcyan   = "24"
-palette.cterm.darkred    = "52"
-palette.cterm.darkpurple = "53"
+palette.cterm.textfg     = "none"
+palette.cterm.darkblue   = "none"
+palette.cterm.darkcyan   = "none"
+palette.cterm.darkred    = "none"
+palette.cterm.darkpurple = "none"
 
 # }}}
 # Formatting: {{{
@@ -76,7 +75,6 @@ BuildPrim('bg', 'aqua')
 BuildPrim('bg', 'blue')
 BuildPrim('bg', 'purple')
 BuildPrim('bg', 'window')
-BuildPrim('bg', 'darkcolumn')
 BuildPrim('bg', 'addbg')
 BuildPrim('bg', 'changebg')
 BuildPrim('bg', 'delbg')
@@ -102,7 +100,6 @@ BuildPrim('fg', 'aqua')
 BuildPrim('fg', 'blue')
 BuildPrim('fg', 'purple')
 BuildPrim('fg', 'window')
-BuildPrim('fg', 'darkcolumn')
 BuildPrim('fg', 'addfg')
 BuildPrim('fg', 'changefg')
 BuildPrim('fg', 'delfg')
@@ -117,7 +114,7 @@ exe $"var fmt_bold = ' gui={n}{b}"    .. $" cterm={n}{b}"    .. $" term={n}{b}" 
 exe $"var fmt_bldi = ' gui={n}{b}"    .. $" cterm={n}{b}"    .. $" term={n}{b}"    .. "'"
 exe $"var fmt_undr = ' gui={n}{u}"    .. $" cterm={n}{u}"    .. $" term={n}{u}"    .. "'"
 exe $"var fmt_undb = ' gui={n}{u}{b}" .. $" cterm={n}{u}{b}" .. $" term={n}{u}{b}" .. "'"
-exe $"var fmt_undi = ' gui={n}{u}"    .. $" cterm={n}{u}"    .. $" term={n}{u}"    .. "'"
+exe $"var fmt_undi = ' gui={n}{u}{i}" .. $" cterm={n}{u}{i}" .. $" term={n}{u}{i}" .. "'"
 exe $"var fmt_curl = ' gui={n}{c}"    .. $" cterm={n}{c}"    .. $" term={n}{c}"    .. "'"
 exe $"var fmt_ital = ' gui={n}{i}"    .. $" cterm={n}{i}"    .. $" term={n}{i}"    .. "'"
 exe $"var fmt_stnd = ' gui={n}{s}"    .. $" cterm={n}{s}"    .. $" term={n}{s}"    .. "'"
@@ -129,7 +126,7 @@ def ColorCorrect()
   # }}}
   # Vim Highlighting: {{{
 
-  exe $"hi! Normal                {fg_none}       {bg_none}         {fmt_none}"
+  exe $"hi! Normal                {fg_none}       {bg_background}   {fmt_none}"
 
   exe $"hi! ColorColumn           {fg_none}       {bg_line}         {fmt_none}"
   # Conceal
@@ -177,7 +174,7 @@ def ColorCorrect()
   # }}}
   # LSP: {{{
   # TODO: add lsp colros.
-  exe $"hi! LspDiagSignErrorText      {fg_delfg}       {bg_none}     {fmt_none}"
+  exe $"hi! LspDiagSignErrorText      {fg_red}         {bg_none}     {fmt_none}"
   exe $"hi! LspDiagSignWarningText    {fg_yellow}      {bg_none}     {fmt_none}"
   exe $"hi! LspDiagSignHintText       {fg_comment}     {bg_none}     {fmt_none}"
   exe $"hi! LspDiagSignInfoText       {fg_none}        {bg_none}     {fmt_none}"
@@ -224,38 +221,52 @@ def ColorCorrect()
   exe $"hi! Comment               {fg_comment}     {bg_none}         {fmt_none}"
   exe $"hi! NonText               {fg_none}        {bg_none}         {fmt_none}"
   exe $"hi! EndOfBuffer           {fg_none}        {bg_none}         {fmt_none}"
-  #exe $"hi! Constant              {fg_purple}      {bg_none}         {fmt_none}"
-  #exe $"hi! String                {fg_green1}      {bg_none}         {fmt_none}"
-  #exe $"hi! Boolean               {fg_purple}      {bg_none}         {fmt_none}"
+  exe $"hi! Constant              {fg_blue}        {bg_none}         {fmt_none}"
+  exe $"hi! String                {fg_aqua}        {bg_none}         {fmt_none}"
+  exe $"hi! Character             {fg_aqua}        {bg_none}         {fmt_none}"
+  exe $"hi! Boolean               {fg_purple}      {bg_none}         {fmt_none}"
   exe $"hi! Identifier            {fg_none}        {bg_none}         {fmt_none}"
   exe $"hi! Function              {fg_green}       {bg_none}         {fmt_bold}"
   exe $"hi! VertSplit             {fg_none}        {bg_none}         {fmt_none}"
+  exe $"hi! NonText               {fg_none}        {bg_none}         {fmt_none}"
+  exe $"hi! SpecialKey            {fg_comment}     {bg_none}         {fmt_none}"
+
+  exe $"hi! Statement             {fg_red}         {bg_none}         {fmt_none}"
+  exe $"hi! PreProc               {fg_green}       {bg_none}         {fmt_none}"
+  exe $"hi! Special               {fg_green}       {bg_none}         {fmt_none}"
+  exe $"hi! SpecialChar           {fg_purple}      {bg_none}         {fmt_none}"
+  exe $"hi! Type                  {fg_yellow}      {bg_none}         {fmt_none}"
+
+  exe $"hi! SpellBad              {fg_none}        {bg_none}         {fmt_undr} ctermul={palette.cterm.red}"
+  exe $"hi! SpellCap              {fg_none}        {bg_none}         {fmt_undr} ctermul={palette.cterm.yellow}"
+  exe $"hi! SpellLocal            {fg_none}        {bg_none}         {fmt_undr} ctermul={palette.cterm.comment}"
+  exe $"hi! SpellRare             {fg_none}        {bg_none}         {fmt_undr} ctermul={palette.cterm.foreground}"
 
   # http//ethanschoonover.com/solarized/ (16 colors are same b/w
   #   light/dark, except 4 colors are swapped)
-  hi Comment ctermfg=243
+  #hi Comment ctermfg=243
   #hi Pmenu ctermfg=253 ctermbg=none
   #hi PmenuMatch ctermfg=none ctermbg=130 cterm=bold
   #hi PmenuSel ctermfg=none ctermbg=245 cterm=none
   #hi PmenuMatchSel ctermfg=none ctermbg=245 cterm=reverse
   #hi PmenuSbar ctermbg=252
   #hi PmenuThumb ctermbg=7
-  hi SpecialKey ctermfg=8 |# 'tab', 'nbsp', 'space', etc.
-  hi NonText ctermfg=0 |# 'eol', etc.
+  #hi SpecialKey ctermfg=8 |# 'tab', 'nbsp', 'space', etc.
+  #hi NonText ctermfg=0 |# 'eol', etc.
   #hi Search ctermfg=8 ctermbg=12
   #hi StatusLine ctermfg=none ctermbg=none cterm=none
   #hi StatusLineNC ctermfg=7 ctermbg=none cterm=none
   #hi StatusLineTerm ctermfg=3 ctermbg=none cterm=none
   #hi StatusLineTermNC ctermfg=14 ctermbg=none cterm=none
   #endif
-  hi link StatusLineNC StatusLine
-  hi Constant ctermfg=4
-  hi String ctermfg=6
-  hi Statement ctermfg=1
+  # hi link StatusLineNC StatusLine
+  # hi Constant ctermfg=4
+  # hi String ctermfg=6
+  #hi Statement ctermfg=1
   #hi Identifier ctermfg=4 cterm=none
-  hi PreProc ctermfg=2
-  hi Special ctermfg=2
-  hi Type ctermfg=3
+  #hi PreProc ctermfg=2
+  #hi Special ctermfg=5
+  #hi Type ctermfg=3
   #hi MatchParen ctermfg=1 ctermbg=none cterm=underline
   #exe $"hi! Special {fg_orange} {bg_none} {fmt_none}"
   #exe $"hi! Character  {fg_orange} {bg_none} {fmt_none}"
@@ -263,7 +274,7 @@ def ColorCorrect()
 enddef
 
 
-autocmd WinEnter,BufEnter,BufReadPost * call timer_start(10, (_) => ColorCorrect())
+autocmd VimEnter,WinEnter * call ColorCorrect()
 
 # Following should occur after setting colorscheme.
 highlight! TrailingWhitespace ctermfg=8 cterm=reverse

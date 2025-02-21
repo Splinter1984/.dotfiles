@@ -15,6 +15,7 @@ g:maplocalleader = '\\'
 &t_SI = "\e[6 q" #SI = INSERT mode
 &t_SR = "\e[4 q" #SR = REPLACE mode
 &t_EI = "\e[2 q" #EI = NORMAL mode (ALL ELSE)
+#&t_Cs = "\e[4:3m" #undercurl
 # Reset the cursor on start. After suspend-resume, cursor changes to beam even
 # in normal mode. This will prevent that.
 autocmd VimEnter,VimResume * silent execute '!echo -ne "\e[2 q"' | redraw!
@@ -30,10 +31,11 @@ autocmd! vimHints
 
 # Turn on listchars for Noname/scratch files and non-help files
 # 'listchars' is not local to buffer, only local to window
-autocmd FileType * if &ft =~ '\v(help|markdown)' | setlocal listchars=tab:\ \ ,trail:\  | else | setlocal listchars=tab:\ \ ,trail:· | endif
-autocmd BufEnter * if &ft == null_string | setlocal listchars=tab:\ \ ,trail:\  | endif
+#autocmd FileType * if &ft =~ '\v(help|markdown)' | setlocal listchars=eol:\ ,tab:\ \ ,trail:\  | else | setlocal listchars=eol:\ ,tab:\ \ ,trail:· | endif
+#autocmd BufEnter * if &ft == null_string | setlocal listchars=eol:\ ,tab:\ \ ,trail:\  | endif
 # autocmd BufEnter,FileType * :echom &ft expand('<amatch>') expand('<afile>') 'here'
 set list
+set listchars=eol:\ ,tab:\ \ ,trail:·
 
 set fillchars=vert:│,fold:۰,diff:·,stl:─,stlnc:═,eob:\ 
 
@@ -79,13 +81,13 @@ set tabstop=2
 set softtabstop=2
 set expandtab
 set re=1
-set updatetime=100 # reducing updatetime
+#set updatetime=1000 # reducing updatetime
 set dir=~/tmp
 # set termguicolors
 #set background=dark
 set t_Co=256
 set cmdheight=2
-#colorscheme defaultplus
+# colorscheme custom
 #colorscheme hybrid #tangoX, sonoma, seoul256, hybrid_reverse/material, happy_hacking, dzo, clearance
 # colorsbox-stbright/stnight, deep-space, deus, herald, minimalist, seti, solorized, thegoodluck, tuttycolori,
 # visualstudio, wildcharm
@@ -161,6 +163,8 @@ packadd vim-gitgutter
 packadd vimsuggest
 packadd gutentags_plus
 packadd vim-gutentags
+#packadd vim-polyglot
+#packadd jinja2.vim
 #packadd vim-misc
 #packadd vim-easytags
 #packadd fzf.vim

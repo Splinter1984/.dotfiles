@@ -54,7 +54,7 @@ if exists("g:loaded_lsp")
         autoHighlight: false,
         autoHighlightDiags: true,
         showDiagWithVirtualText: false, # when you set this false, set showDiagOnStatusLine true
-        highlightDiagInline: false,
+        highlightDiagInline: true,
         showDiagOnStatusLine: true,
         diagVirtualTextAlign: 'after',
         autoPopulateDiags: true, # add diags to location list automatically <- :lopen [l ]l
