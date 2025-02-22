@@ -25,26 +25,6 @@ def Diagstr(): string
     return diagstr
 enddef
 
-def BuflineStr(width: number): string
-    return exists('*g:BuflineGetstr') ? g:BuflineGetstr(width) : ''
-enddef
-
-var elapsedTime = 0
-def GetElapsed(): string
-    var mins = elapsedTime % 60
-    var hrs = elapsedTime / 60
-    return (hrs < 10 ? $'0{hrs}' : string(hrs)) .. ':' .. (mins < 10 ? $'0{mins}' : string(mins))
-enddef
-
-def UpdateElapsed(timer: number)
-    if exists('#User#ElapsedTimeUpdated')
-        :doau <nomodeline> User ElapsedTimeUpdated
-    endif
-    elapsedTime += 1
-    timer_start(60 * 1000, function(UpdateElapsed))
-enddef
-timer_start(60 * 1000, function(UpdateElapsed))
-
 # Make this function global. 'statusline' option is processed in global context,
 # where script-local items are not accessible.
 def! g:MyActiveStatusline(): string

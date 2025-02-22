@@ -4,10 +4,10 @@ vim9script
 nnoremap j gj
 nnoremap k gk
 
-nnoremap <leader>j 6j
-vnoremap <leader>j 6j
-nnoremap <leader>k 6k
-vnoremap <leader>k 6k
+nnoremap <space>j 6j
+vnoremap <space>j 6j
+nnoremap <space>k 6k
+vnoremap <space>k 6k
 
 # alternative to 'packadd nohlsearch'
 nnoremap <silent> <esc> :nohls<cr><esc>

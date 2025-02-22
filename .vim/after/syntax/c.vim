@@ -71,7 +71,6 @@ syn keyword cBoolean true false TRUE FALSE
 " Default highlighting
 hi def link cBoolean    Boolean
 hi def link cAnsiName   Identifier
-"hi def line cCommentL   Comment
 
 " Highlight all standard C keywords as Statement
 " This is very similar to what other IDEs and editors do

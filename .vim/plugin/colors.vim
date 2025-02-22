@@ -1,5 +1,4 @@
 vim9script
-# FIXME: add description + links to original AUTHORS.
 
 # Palette: {{{
 # ----------------------------------------------------------------------------
@@ -121,10 +120,11 @@ exe $"var fmt_stnd = ' gui={n}{s}"    .. $" cterm={n}{s}"    .. $" term={n}{s}" 
 exe $"var fmt_revr = ' gui={n}{r}"    .. $" cterm={n}{r}"    .. $" term={n}{r}"    .. "'"
 exe $"var fmt_revb = ' gui={n}{r}{b}" .. $" cterm={n}{r}{b}" .. $" term={n}{r}{b}" .. "'"
 
+# }}}
+# Vim Highlighting: {{{
+# ----------------------------------------------------------------------------
 
 def ColorCorrect()
-  # }}}
-  # Vim Highlighting: {{{
 
   exe $"hi! Normal                {fg_none}       {bg_background}   {fmt_none}"
 
@@ -146,7 +146,7 @@ def ColorCorrect()
   # Folded
   # FoldColumn
   exe $"hi! SignColumn            {fg_none}       {bg_none}         {fmt_none}"
-  # GitGutter: {{{
+# GitGutter: {{{
   # FIXME: don't know actually what's going on, but `hi` only this way able to
   # fix git gutter highlights.
 
@@ -167,19 +167,18 @@ def ColorCorrect()
   exe $"hi! diffChangeed              {fg_changefg}    {bg_none}     {fmt_revr}"
   exe $"hi! diffRemoved               {fg_delfg}       {bg_none}     {fmt_revr}"
   exe $"hi! diffText                  {fg_none}        {bg_none}     {fmt_none}"
-  # }}}
-  # VimSuggest: {{{
+# }}}
+# VimSuggest: {{{
 
   exe $"hi! VimSuggestMute            {fg_comment}     {bg_none}     {fmt_none}"
-  # }}}
-  # LSP: {{{
-  # TODO: add lsp colros.
+# }}}
+# LSP: {{{
   exe $"hi! LspDiagSignErrorText      {fg_red}         {bg_none}     {fmt_none}"
   exe $"hi! LspDiagSignWarningText    {fg_yellow}      {bg_none}     {fmt_none}"
   exe $"hi! LspDiagSignHintText       {fg_comment}     {bg_none}     {fmt_none}"
-  exe $"hi! LspDiagSignInfoText       {fg_none}        {bg_none}     {fmt_none}"
+  exe $"hi! LspDiagSignInfoText       {fg_fg1}         {bg_none}     {fmt_none}"
 
-  # }}}
+# }}}
   # Incsearch
   exe $"hi! LineNr                {fg_fg1}         {bg_none}         {fmt_none}"
   exe $"hi! Visual                {fg_none}        {bg_none}         {fmt_revr}"
@@ -188,18 +187,20 @@ def ColorCorrect()
   exe $"hi! MatchParen            {fg_foreground}  {bg_none}         {fmt_revr}"
 
   exe $"hi! Todo                  {fg_comment}     {bg_none}         {fmt_revr}"
-  # TODO
-  # SyntaxMatch: {{{
+# SyntaxMatch: {{{
   # exe $"hi! todo                 {fg_blue}        {bg_none}         {fmt_revb}"
   # exe $"hi! fixme                {fg_red}         {bg_none}         {fmt_revb}"
   # exe $"hi! note                 {fg_fg1}         {bg_none}         {fmt_revb}"
 
-  # syntax match my_todo /TODO/
-  # highlight link my_todo todo
-  # syntax match my_fixme /BOB/
-  # highlight link my_fixme fixme
+  # syntax match TODO /\v\_.<(TODO).*/hs=s+1  containedin=.*Comment
+  # syntax match FIXME /\v\_.<(FIXME).*/hs=s+1 containedin=.*Comment
+  # syntax match NOTE /\v\_.<(NOTE).*/hs=s+1  containedin=.*Comment
 
-  # }}}
+  # hi link TODO todo
+  # hi link FIXME fixme
+  # hi link NOTE note
+
+# }}}
 
   exe $"hi! Error                 {fg_red}         {bg_none}         {fmt_revr}"
   exe $"hi! Pmenu                 {fg_none}        {bg_window}       {fmt_none}"
@@ -210,13 +211,13 @@ def ColorCorrect()
   #exe $"hi! IncSearch             {fg_orange}      {bg_none}         {fmt_revr}"
   exe $"hi! CurSearch             {fg_yellow}      {bg_none}         {fmt_revr}"
 
-  # StatusLineCustom: {{{
+# StatusLineCustom: {{{
 
   exe $"hi! StatLineSP            {fg_green}       {bg_none}         {fmt_none}"
   exe $"hi! StatLineSP1           {fg_yellow}      {bg_none}         {fmt_none}"
   exe $"hi! StatLineSD            {fg_blue}        {bg_none}         {fmt_none}"
 
-  # }}}
+# }}}
 
   exe $"hi! Comment               {fg_comment}     {bg_none}         {fmt_none}"
   exe $"hi! NonText               {fg_none}        {bg_none}         {fmt_none}"
@@ -242,35 +243,6 @@ def ColorCorrect()
   exe $"hi! SpellLocal            {fg_none}        {bg_none}         {fmt_undr} ctermul={palette.cterm.comment}"
   exe $"hi! SpellRare             {fg_none}        {bg_none}         {fmt_undr} ctermul={palette.cterm.foreground}"
 
-  # http//ethanschoonover.com/solarized/ (16 colors are same b/w
-  #   light/dark, except 4 colors are swapped)
-  #hi Comment ctermfg=243
-  #hi Pmenu ctermfg=253 ctermbg=none
-  #hi PmenuMatch ctermfg=none ctermbg=130 cterm=bold
-  #hi PmenuSel ctermfg=none ctermbg=245 cterm=none
-  #hi PmenuMatchSel ctermfg=none ctermbg=245 cterm=reverse
-  #hi PmenuSbar ctermbg=252
-  #hi PmenuThumb ctermbg=7
-  #hi SpecialKey ctermfg=8 |# 'tab', 'nbsp', 'space', etc.
-  #hi NonText ctermfg=0 |# 'eol', etc.
-  #hi Search ctermfg=8 ctermbg=12
-  #hi StatusLine ctermfg=none ctermbg=none cterm=none
-  #hi StatusLineNC ctermfg=7 ctermbg=none cterm=none
-  #hi StatusLineTerm ctermfg=3 ctermbg=none cterm=none
-  #hi StatusLineTermNC ctermfg=14 ctermbg=none cterm=none
-  #endif
-  # hi link StatusLineNC StatusLine
-  # hi Constant ctermfg=4
-  # hi String ctermfg=6
-  #hi Statement ctermfg=1
-  #hi Identifier ctermfg=4 cterm=none
-  #hi PreProc ctermfg=2
-  #hi Special ctermfg=5
-  #hi Type ctermfg=3
-  #hi MatchParen ctermfg=1 ctermbg=none cterm=underline
-  #exe $"hi! Special {fg_orange} {bg_none} {fmt_none}"
-  #exe $"hi! Character  {fg_orange} {bg_none} {fmt_none}"
-  #exe $"hi! SpecialChar  {fg_orange} {bg_none} {fmt_none}"
 enddef
 
 
