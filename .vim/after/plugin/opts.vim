@@ -4,8 +4,8 @@ if exists("g:loaded_vimcomplete")
     var dictproperties = {
         python: { sortedDict: false },
         text: { sortedDict: true },
-        cpp: { sortedDict: false, onlyWords: false, matchStr: '\S\+$', triggerWordLen: 2, info: true },
-        c: { sortedDict: false, onlyWords: false, matchStr: '\S\+$', triggerWordLen: 2, info: true },
+        cpp: { sortedDict: false, onlyWords: false, matchStr: '\S\+$', triggerWordLen: 2, info: false },
+        c: { sortedDict: false, onlyWords: false, matchStr: '\S\+$', triggerWordLen: 2, info: false },
         bash: { sortedDict: true },
         sh: { sortedDict: true },
     }
@@ -14,7 +14,7 @@ if exists("g:loaded_vimcomplete")
         buffer: { enable: true, maxCount: 10, priority: 9, urlComplete: true, envComplete: true, completionMatcher: 'icase' },
         dictionary: { enable: false, priority: 10, maxCount: 10, filetypes: ['python', 'cpp', 'text'], matcher: 'ignorecase', properties: dictproperties },
         abbrev: { enable: true, maxCount: 30 },
-        lsp: { enable: true, maxCount: 10, priority: 11 },
+        lsp: { enable: true, maxCount: 10, priority: 11, keywordOnly: false },
         omnifunc: { enable: true, priority: 9, filetypes: ['c', 'tex', 'python'] },
         vsnip: { enable: false, adaptNonKeyword: true, filetypes: ['python', 'java', 'cpp'] },
         vimscript: { enable: true, priority: 10 },
@@ -37,7 +37,7 @@ if exists("g:loaded_vimcomplete")
                 \ (feedkeys("\<Plug>(vimcomplete-info-window-pagedown)", 'ni') ? "" : "") : "\<End>"
 
     # Remove border from info window (doc window)
-    autocmd VimEnter * set completepopup+=highlight:Normal
+    autocmd VimEnter * set completepopup+=border:off,highlight:Normal
     # Set more options (not settable through completepopup)
     g:VimCompleteInfoWindowOptionsSet({
         # borderhighlight: ['Comment'],
@@ -60,12 +60,13 @@ if exists("g:loaded_lsp")
         autoPopulateDiags: true, # add diags to location list automatically <- :lopen [l ]l
         completionMatcher: 'fuzzy', # case/fuzzy/icase
         # completionMatcher: 'case', # case/fuzzy/icase
-        #diagSignErrorText: ' ',
-        #diagSignHintText: ' ',
-        #diagSignInfoText: ' ',
-        #diagSignWarningText: ' ',
+        # diagSignErrorText: ' ',
+        # diagSignHintText: ' ',
+        # diagSignInfoText: ' ',
+        # diagSignWarningText: ' ',
         # outlineWinSize: 30,
         showSignature: true,
+        # showInlayHints: true,
         echoSignature: true,
         # vsnipSupport: false,
         ignoreMissingServer: true,

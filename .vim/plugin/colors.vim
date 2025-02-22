@@ -170,13 +170,22 @@ def ColorCorrect()
 # }}}
 # VimSuggest: {{{
 
-  exe $"hi! VimSuggestMute            {fg_comment}     {bg_none}     {fmt_none}"
+  exe $"hi! VimSuggestMute            {fg_none}        {bg_none}         {fmt_none}"
+  exe $"hi! VimSuggestMatch           {fg_yellow}      {bg_window}       {fmt_none}"
+  exe $"hi! VimSuggestSel             {fg_none}        {bg_fg1}          {fmt_bold}"
+
 # }}}
 # LSP: {{{
+
   exe $"hi! LspDiagSignErrorText      {fg_red}         {bg_none}     {fmt_none}"
   exe $"hi! LspDiagSignWarningText    {fg_yellow}      {bg_none}     {fmt_none}"
   exe $"hi! LspDiagSignHintText       {fg_comment}     {bg_none}     {fmt_none}"
   exe $"hi! LspDiagSignInfoText       {fg_fg1}         {bg_none}     {fmt_none}"
+
+  exe $"hi! LspDiagVirtualTextError      {fg_red}         {bg_none}     {fmt_none}"
+  exe $"hi! LspDiagVirtualTextWarning    {fg_yellow}      {bg_none}     {fmt_none}"
+  exe $"hi! LspDiagVirtualTextHint       {fg_comment}     {bg_none}     {fmt_none}"
+  exe $"hi! LspDiagVirtualTextInfo       {fg_fg1}         {bg_none}     {fmt_none}"
 
 # }}}
   # Incsearch
@@ -206,6 +215,8 @@ def ColorCorrect()
   exe $"hi! Pmenu                 {fg_none}        {bg_window}       {fmt_none}"
   exe $"hi! PmenuMatch            {fg_yellow}      {bg_window}       {fmt_none}"
   exe $"hi! PmenuSel              {fg_none}        {bg_fg1}          {fmt_bold}"
+  exe $"hi! PmenuThumb            {fg_comment}     {bg_comment}      {fmt_none}"
+  exe $"hi! PmenuSbar             {fg_line}        {bg_line}         {fmt_none}"
 
   exe $"hi! Search                {fg_yellow}      {bg_window}       {fmt_bold}"
   #exe $"hi! IncSearch             {fg_orange}      {bg_none}         {fmt_revr}"
