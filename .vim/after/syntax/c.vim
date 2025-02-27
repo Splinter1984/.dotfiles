@@ -1,15 +1,16 @@
+" vim: ft=vim:fdm=marker
+
 " ==============================================================================
 " Vim syntax file
 " Language:        C Additions
 " Original Author: Mikhail Wolfson, Jon Haggblad <https://github.com/octol>
-" Maintainer:      bfrg <https://github.com/bfrg>
-" Website:         https://github.com/bfrg/vim-c-cpp-modern
-" Last Change:     Oct 2, 2024
+" Fork Maintainer: splitner1984 <https://github.com/splinter1984>
+" Last Change:     Feb 27, 2025
 " ==============================================================================
 
 
 " Highlight additional keywords in the comments
-syn keyword cTodo contained BUG NOTE
+" syn keyword cTodo contained BUG NOTE
 
 
 " Highlight function names
@@ -24,11 +25,12 @@ endif
 " Highlight struct/class member variables
 if get(g:, 'cpp_member_highlight', 1)
     syn match cMemberAccess "\.\|->" nextgroup=cStructMember,cppTemplateKeyword
+    hi def link cMemberAccess MemberAccess
     syn match cStructMember "\<\h\w*\>\%((\|<\)\@!" contained
     syn cluster cParenGroup add=cStructMember
     syn cluster cPreProcGroup add=cStructMember
     syn cluster cMultiGroup add=cStructMember
-    hi def link cStructMember Identifier
+    hi! def link cStructMember Identifier
 
     if &filetype ==# 'cpp'
         syn keyword cppTemplateKeyword template
@@ -57,6 +59,7 @@ if get(g:, 'cpp_operator_highlight', 1)
     syn match cOperator "[^:]\@1<=:[^:]\@="
     syn match cOperator "-[^>]"me=e-1
     syn match cOperator "/[^/*]"me=e-1
+    hi! def link cOperator MemberAccess
 endif
 
 
@@ -71,6 +74,7 @@ syn keyword cBoolean true false TRUE FALSE
 " Default highlighting
 hi def link cBoolean    Boolean
 hi def link cAnsiName   Identifier
+hi def link cConstant   Boolean
 
 " Highlight all standard C keywords as Statement
 " This is very similar to what other IDEs and editors do
