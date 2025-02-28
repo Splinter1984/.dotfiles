@@ -1,7 +1,8 @@
 vim9script
 
 def Gitbranch(): string
-  var branch = $'%#StatLineSP1#(%*{split(system('git branch --show-current'))[0]}%#StatLineSP1#)%*'
+  var cmd = "git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \\(.*\\)/\\1/'"
+  var branch = $'%#StatLineSP1#(%*{system(cmd)[ : -2]}%#StatLineSP1#)%*'
   return stridx(branch, "fatal") != -1 ? '' : branch
 enddef
 
@@ -24,6 +25,31 @@ def Diagstr(): string
     endif
     return diagstr
 enddef
+
+# XXX: nice todo.
+# {{{
+var currentmode = {
+    \ 'n':  'NORMAL',
+    \ 'no': 'NORMAL,OP',
+    \ 'v':  'VISUAL',
+    \ 'V':  'V-LINE',
+    \ '^V': 'V-BLOCK',
+    \ 's':  'SELECT',
+    \ 'S':  'S-LINE',
+    \ '^S': 'S-BLOCK',
+    \ 'i':  'INSERT',
+    \ 'R':  'REPLACE',
+    \ 'Rv': 'V-REPLACE',
+    \ 'c':  'COMMAND',
+    \ 'cv': 'VIM EX',
+    \ 'ce': 'EX',
+    \ 'r':  'PROMPT',
+    \ 'rm': 'MORE',
+    \ 'r?': 'CONFIRM',
+    \ '!':  'SHELL',
+    \ 't':  'TERMINAL'
+    \}
+# }}}
 
 # Make this function global. 'statusline' option is processed in global context,
 # where script-local items are not accessible.
