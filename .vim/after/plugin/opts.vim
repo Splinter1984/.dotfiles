@@ -16,17 +16,17 @@ if exists("g:loaded_vimcomplete")
         abbrev: { enable: true, maxCount: 30 },
         lsp: { enable: true, maxCount: 10, priority: 11, keywordOnly: false },
         omnifunc: { enable: true, priority: 9, filetypes: ['c', 'tex', 'python'] },
-        vsnip: { enable: false, adaptNonKeyword: true, filetypes: ['python', 'java', 'cpp'] },
+        vsnip: { enable: false, adaptNonKeyword: true, filetypes: ['python', 'cpp'] },
         vimscript: { enable: true, priority: 10 },
         tmux: { enable: false },
         tag: { enable: true },
         path: { enable: true },
         ngram: {
-            enable: false,
+            enable: true,
             priority: 10,
             bigram: false,
             filetypes: ['text', 'help', 'markdown', 'txt'],
-            filetypesComments: ['c', 'cpp', 'python', 'java', 'lua', 'vim', 'zsh', 'r'],
+            filetypesComments: ['c', 'cpp', 'python', 'lua', 'vim', 'sh', 'bash'],
             triggerWordLen: 2,
         },
     })
@@ -57,7 +57,7 @@ if exists("g:loaded_lsp")
         highlightDiagInline: true,
         showDiagOnStatusLine: true,
         diagVirtualTextAlign: 'after',
-        autoPopulateDiags: true, # add diags to location list automatically <- :lopen [l ]l
+        autoPopulateDiags: false, # add diags to location list automatically <- :lopen [l ]l
         completionMatcher: 'fuzzy', # case/fuzzy/icase
         # completionMatcher: 'case', # case/fuzzy/icase
         # diagSignErrorText: ' ',
@@ -71,6 +71,7 @@ if exists("g:loaded_lsp")
         # vsnipSupport: false,
         ignoreMissingServer: true,
         # autoComplete: false,  # when false, it sets omnifunc (use <c-x><c-o>)
+        outlineWinSize: 30
     })
     if executable('clangd')
         g:LspAddServer([{
@@ -82,12 +83,53 @@ if exists("g:loaded_lsp")
         }])
     endif
     if executable('pylsp')
-        # see ~/.config/pycodestyle
         g:LspAddServer([{
             name: 'pylsp',
             filetype: ['python'],
             path: exepath('pylsp'),
-            # debug: true,
+            args: ['--check-parent-process', '-v'],
+            workspaceConfig: {
+              "pylsp": {
+                "configurationSources": ["jedi", "flake8", "pycodestyle"],
+                "plugins": {
+                  "flake8": {
+                    "enabled": v:true,
+                    "exclude": ['.git', '__pycache__', 'build'],
+                    "hangClosing": v:false,
+                    "ignore": ["F403", "F405"],
+                    "per-file-ignores": {
+                      "__init__.py": "F401"
+                    },
+                    "select": []
+                  },
+                  "pycodestyle": {
+                    "enabled": v:true,
+                    "ignore": ["E704", "E231", "E302", "E501", "E305"],
+                    "max-line-length": 160,
+                    "statistics": v:true
+                  },
+                  "jedi": {
+                    "enabled": v:true
+                  },
+                  # XXX: don't like to disable them fully. maybe need to dig into
+                  #      their configurations.
+                  # {{{
+                    "pyling": {
+                      "enabled": v:false
+                    },
+                    "pyflakes": {
+                      "enabled": v:false
+                    },
+                    "autopep8": {
+                      "enabled": v:false
+                    },
+                    "mccabe": {
+                      "enabled": v:false
+                    },
+                  # }}}
+                }
+              }
+            }
         }])
     endif
     if executable('rust-analyzer')
@@ -129,8 +171,9 @@ endif
 if exists("g:loaded_gitgutter")
   # FIXME: currently not working.
   if exists("#gitgutter")
-    autocmd! gitgutter QuickFixCmdPre *vimgrep*
-    autocmd! gitgutter QuickFixCmdPost *vimgrep*
+    #autocmd! gitgutter QuickFixCmdPre *vimgrep*
+    #autocmd! gitgutter QuickFixCmdPost *vimgrep*
+    autocmd BufWrite * GitGutterAll
   endif
 endif
 
@@ -139,7 +182,7 @@ if exists("g:gutentags_enabled")
   # config project root markers.
   g:gutentags_project_root = ['.root']
   # generate datebases in my cache directory, prevent gtags files polluting my project
-  g:gutentags_cache_dir = expand('~/.cache/tags')
+  # g:gutentags_cache_dir = expand('~/.cache/tags')
   # resolve all sym links please!
   g:gutentags_resolve_symlinks = 1
   # change focus to quickfix window after search (optional).
