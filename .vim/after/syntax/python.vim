@@ -100,7 +100,7 @@ let g:pymode_syntax_slow_sync = get(g:, 'pymode_syntax_slow_sync', 0)
     syn match   pythonComment   "#.*$" display contains=pythonTodo,@Spell
     syn match   pythonRun       "\%^#!.*$"
     syn match   pythonCoding    "\%^.*\(\n.*\)\?#.*coding[:=]\s*[0-9A-Za-z-_.]\+.*$"
-    syn keyword pythonTodo      TODO FIXME XXX contained
+    syn keyword pythonTodo      TODO FIXME NOTE XXX contained
 
 " }}}
 

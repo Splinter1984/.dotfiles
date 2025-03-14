@@ -11,11 +11,11 @@ if exists("g:loaded_vimcomplete")
     }
     g:VimCompleteOptionsSet({
         completor: { matchCase: false, triggerWordLen: 0, shuffleEqualPriority: true, alwaysOn: true, postfixClobber: true, postfixHighlight: true, showKind: true, debug: false },
-        buffer: { enable: true, maxCount: 10, priority: 9, urlComplete: true, envComplete: true, completionMatcher: 'icase' },
-        dictionary: { enable: false, priority: 10, maxCount: 10, filetypes: ['python', 'cpp', 'text'], matcher: 'ignorecase', properties: dictproperties },
+        buffer: { enable: true, maxCount: 5, priority: 10, urlComplete: true, envComplete: true, completionMatcher: 'icase' },
+        dictionary: { enable: false, priority: 9, maxCount: 5, filetypes: ['python', 'cpp', 'text'], matcher: 'ignorecase', properties: dictproperties },
         abbrev: { enable: true, maxCount: 30 },
-        lsp: { enable: true, maxCount: 10, priority: 11, keywordOnly: false },
-        omnifunc: { enable: true, priority: 9, filetypes: ['c', 'tex', 'python'] },
+        lsp: { enable: true, maxCount: 5, priority: 11, keywordOnly: false },
+        omnifunc: { enable: false, priority: 9, filetypes: ['c', 'tex', 'python'] },
         vsnip: { enable: false, adaptNonKeyword: true, filetypes: ['python', 'cpp'] },
         vimscript: { enable: true, priority: 10 },
         tmux: { enable: false },
@@ -58,8 +58,7 @@ if exists("g:loaded_lsp")
         showDiagOnStatusLine: true,
         diagVirtualTextAlign: 'after',
         autoPopulateDiags: false, # add diags to location list automatically <- :lopen [l ]l
-        completionMatcher: 'fuzzy', # case/fuzzy/icase
-        # completionMatcher: 'case', # case/fuzzy/icase
+        # completionMatcher: 'fuzzy', # case/fuzzy/icase
         # diagSignErrorText: ' ',
         # diagSignHintText: ' ',
         # diagSignInfoText: ' ',
@@ -95,16 +94,14 @@ if exists("g:loaded_lsp")
                   "flake8": {
                     "enabled": v:true,
                     "exclude": ['.git', '__pycache__', 'build'],
-                    "hangClosing": v:false,
-                    "ignore": ["F403", "F405"],
+                    "ignore": ["E501", "E231", "E231", "F405", "F841", "D", "CNL", "Q000"],
                     "per-file-ignores": {
                       "__init__.py": "F401"
                     },
-                    "select": []
                   },
                   "pycodestyle": {
                     "enabled": v:true,
-                    "ignore": ["E704", "E231", "E302", "E501", "E305"],
+                    "ignore": ["E704", "E302", "E501", "E305"],
                     "max-line-length": 160,
                     "statistics": v:true
                   },
@@ -118,7 +115,8 @@ if exists("g:loaded_lsp")
                       "enabled": v:false
                     },
                     "pyflakes": {
-                      "enabled": v:false
+                      "enabled": v:false,
+                      "ignore": ["F403"]
                     },
                     "autopep8": {
                       "enabled": v:false
@@ -156,7 +154,7 @@ if exists("g:loaded_lsp")
         #endif
         # highlight  link  LspDiagSignErrorText    LspDiagVirtualTextError
         # highlight  link  LspDiagSignWarningText  LspDiagVirtualTextWarning
-        # ighlight  link  LspDiagSignHintText     LspDiagVirtualTextHint
+        # highlight  link  LspDiagSignHintText     LspDiagVirtualTextHint
         # highlight  link  LspDiagSignInfoText     LspDiagVirtualTextInfo
         # highlight LspDiagInlineWarning ctermfg=none
         # highlight LspDiagInlineHint ctermfg=none
@@ -197,7 +195,7 @@ if exists("g:loaded_vimsuggest")
         alwayson: true,
         # pum: false,
         # trigger: 'tn',
-        reverse: true,
+        reverse: false,
         fuzzy: true,
         # prefixlen: 3,
         popupattrs: {
@@ -216,10 +214,12 @@ if exists("g:loaded_vimsuggest")
         fuzzy: true,
         # exclude: ['^\s*\d*\s*b\%[uffer]!\?\s\+'],
         # onspace: ['colo\%[rscheme]', 'b\%[uffer]', 'e\%[dit]', 'Scope'],
-        onspace: '.*',
+        # onspace: '.*',
         # trigger: 'tn',
         reverse: true,
         # auto_first: true,  # XXX: :hi will not call ':highlight' but calls ':HighlightGroupUnderCursor'
+                             # which cause a E163 error during work with
+                             # buffers
         complete_sg: true,
         # prefixlen: 3,
         # bindkeys: false,

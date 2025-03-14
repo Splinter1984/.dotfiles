@@ -6,12 +6,12 @@ vim9script
 
 var palette = {'cterm': {}}
 
-palette.cterm.background = "234"
-palette.cterm.foreground = "255"
+palette.cterm.backgd     = "234"
+palette.cterm.foregd     = "255"
 palette.cterm.fg1        = "240"
-palette.cterm.window     = "236"
-palette.cterm.selection  = "237"
-palette.cterm.line       = "235"
+palette.cterm.window     = "237"
+palette.cterm.fg2        = "250"
+palette.cterm.line       = "234"
 palette.cterm.comment    = "243"
 palette.cterm.red        = "1"
 palette.cterm.orange     = "214"
@@ -32,7 +32,7 @@ palette.cterm.textfg     = "none"
 palette.cterm.darkblue   = "none"
 palette.cterm.darkcyan   = "none"
 palette.cterm.darkred    = "none"
-palette.cterm.darkpurple = "none"
+palette.cterm.darkpurple = "13"
 
 # }}}
 # Formatting: {{{
@@ -58,10 +58,10 @@ def BuildPrim(hi_elem: string, field: string)
 enddef
 
 var bg_none = $'ctermbg={n}'
-BuildPrim('bg', 'foreground')
+BuildPrim('bg', 'foregd')
 BuildPrim('bg', 'fg1')
-BuildPrim('bg', 'background')
-BuildPrim('bg', 'selection')
+BuildPrim('bg', 'backgd')
+BuildPrim('bg', 'fg2')
 BuildPrim('bg', 'line')
 BuildPrim('bg', 'comment')
 BuildPrim('bg', 'red')
@@ -83,10 +83,10 @@ BuildPrim('bg', 'darkred')
 BuildPrim('bg', 'darkpurple')
 
 var fg_none = $'ctermfg={n}'
-BuildPrim('fg', 'foreground')
+BuildPrim('fg', 'foregd')
 BuildPrim('fg', 'fg1')
-BuildPrim('fg', 'background')
-BuildPrim('fg', 'selection')
+BuildPrim('fg', 'backgd')
+BuildPrim('fg', 'fg2')
 BuildPrim('fg', 'line')
 BuildPrim('fg', 'comment')
 BuildPrim('fg', 'red')
@@ -108,17 +108,17 @@ BuildPrim('fg', 'darkcyan')
 BuildPrim('fg', 'darkred')
 BuildPrim('fg', 'darkpurple')
 
-exe $"var fmt_none = ' gui={n}"       .. $" cterm={n}"       .. $" term={n}"       .. "'"
-exe $"var fmt_bold = ' gui={n}{b}"    .. $" cterm={n}{b}"    .. $" term={n}{b}"    .. "'"
-exe $"var fmt_bldi = ' gui={n}{b}"    .. $" cterm={n}{b}"    .. $" term={n}{b}"    .. "'"
-exe $"var fmt_undr = ' gui={n}{u}"    .. $" cterm={n}{u}"    .. $" term={n}{u}"    .. "'"
-exe $"var fmt_undb = ' gui={n}{u}{b}" .. $" cterm={n}{u}{b}" .. $" term={n}{u}{b}" .. "'"
-exe $"var fmt_undi = ' gui={n}{u}{i}" .. $" cterm={n}{u}{i}" .. $" term={n}{u}{i}" .. "'"
-exe $"var fmt_curl = ' gui={n}{c}"    .. $" cterm={n}{c}"    .. $" term={n}{c}"    .. "'"
-exe $"var fmt_ital = ' gui={n}{i}"    .. $" cterm={n}{i}"    .. $" term={n}{i}"    .. "'"
-exe $"var fmt_stnd = ' gui={n}{s}"    .. $" cterm={n}{s}"    .. $" term={n}{s}"    .. "'"
-exe $"var fmt_revr = ' gui={n}{r}"    .. $" cterm={n}{r}"    .. $" term={n}{r}"    .. "'"
-exe $"var fmt_revb = ' gui={n}{r}{b}" .. $" cterm={n}{r}{b}" .. $" term={n}{r}{b}" .. "'"
+exe $"var fmt_none = ' gui={n}              cterm={n}           term={n}      '"
+exe $"var fmt_bold = ' gui={n}{b}           cterm={n}{b}        term={n}{b}   '"
+exe $"var fmt_bldi = ' gui={n}{b}           cterm={n}{b}        term={n}{b}   '"
+exe $"var fmt_undr = ' gui={n}{u}           cterm={n}{u}        term={n}{u}   '"
+exe $"var fmt_undb = ' gui={n}{u}{b}        cterm={n}{u}{b}     term={n}{u}{b}'"
+exe $"var fmt_undi = ' gui={n}{u}{i}        cterm={n}{u}{i}     term={n}{u}{i}'"
+exe $"var fmt_curl = ' gui={n}{c}           cterm={n}{c}        term={n}{c}   '"
+exe $"var fmt_ital = ' gui={n}{i}           cterm={n}{i}        term={n}{i}   '"
+exe $"var fmt_stnd = ' gui={n}{s}           cterm={n}{s}        term={n}{s}   '"
+exe $"var fmt_revr = ' gui={n}{r}           cterm={n}{r}        term={n}{r}   '"
+exe $"var fmt_revb = ' gui={n}{r}{b}        cterm={n}{r}{b}     term={n}{r}{b}'"
 
 # }}}
 # Vim Highlighting: {{{
@@ -126,34 +126,33 @@ exe $"var fmt_revb = ' gui={n}{r}{b}" .. $" cterm={n}{r}{b}" .. $" term={n}{r}{b
 
 def ColorCorrect()
 
-  exe $"hi! Normal                {fg_none}       {bg_background}   {fmt_none}"
+  exe $"hi! Normal                    {fg_none}       {bg_none}      {fmt_none}"
 
-  exe $"hi! ColorColumn           {fg_none}       {bg_line}         {fmt_none}"
-  # Conceal
+  exe $"hi! ColorColumn               {fg_none}       {bg_backgd}    {fmt_none}"
+  exe $"hi! Conceal                   {fg_fg1}        {bg_none}      {fmt_none}"
   # Cursor
   # CursorIM
-  exe $"hi! CursorColumn          {fg_none}       {bg_line}         {fmt_none}"
-  exe $"hi! CursorLine            {fg_none}       {bg_line}         {fmt_none}"
-  exe $"hi! CursorLineNr          {fg_yellow}     {bg_line}         {fmt_none}"
-  exe $"hi! CursorLineSign        {fg_none}       {bg_line}         {fmt_none}"
+  exe $"hi! CursorColumn              {fg_none}       {bg_line}      {fmt_none}"
+  exe $"hi! CursorLine                {fg_none}       {bg_line}      {fmt_none}"
+  exe $"hi! CursorLineNr              {fg_yellow}     {bg_line}      {fmt_none}"
+  exe $"hi! CursorLineSign            {fg_none}       {bg_line}      {fmt_none}"
   # Directory
-  exe $"hi! DiffAdd               {fg_addfg}      {bg_none}         {fmt_none}"
-  exe $"hi! DiffChange            {fg_changefg}   {bg_none}         {fmt_none}"
-  exe $"hi! DiffDelete            {fg_delfg}      {bg_none}         {fmt_none}"
-  exe $"hi! DiffText              {fg_none}       {bg_none}         {fmt_none}"
+  exe $"hi! DiffAdd                   {fg_addfg}      {bg_none}      {fmt_none}"
+  exe $"hi! DiffChange                {fg_changefg}   {bg_none}      {fmt_none}"
+  exe $"hi! DiffDelete                {fg_delfg}      {bg_none}      {fmt_none}"
+  exe $"hi! DiffText                  {fg_none}       {bg_none}      {fmt_none}"
   # ErrorMsg
   # VertSplit
   # Folded
   # FoldColumn
-  exe $"hi! SignColumn            {fg_none}       {bg_none}         {fmt_none}"
-# GitGutter: {{{
-  # FIXME: don't know actually what's going on, but `hi` only this way able to
-  # fix git gutter highlights.
+  exe $"hi! SignColumn                {fg_none}        {bg_none}     {fmt_none}"
 
-  exe $"hi! GitGutterAdd          {fg_addfg}       {bg_none}         {fmt_none}"
-  exe $"hi! GitGutterChange       {fg_changefg}    {bg_none}         {fmt_none}"
-  exe $"hi! GitGutterDelete       {fg_delfg}       {bg_none}         {fmt_none}"
-  exe $"hi! GitGutterChangeDelete {fg_delfg}       {bg_none}         {fmt_none}"
+## GitGutter: {{{
+
+  exe $"hi! GitGutterAdd              {fg_addfg}       {bg_none}     {fmt_none}"
+  exe $"hi! GitGutterChange           {fg_changefg}    {bg_none}     {fmt_none}"
+  exe $"hi! GitGutterDelete           {fg_delfg}       {bg_none}     {fmt_none}"
+  exe $"hi! GitGutterChangeDelete     {fg_delfg}       {bg_none}     {fmt_none}"
 
   exe $"hi! GitGutterAddLine          {fg_addfg}       {bg_none}     {fmt_none}"
   exe $"hi! GitGutterChangeLine       {fg_changefg}    {bg_none}     {fmt_none}"
@@ -167,99 +166,99 @@ def ColorCorrect()
   exe $"hi! diffChangeed              {fg_changefg}    {bg_none}     {fmt_revr}"
   exe $"hi! diffRemoved               {fg_delfg}       {bg_none}     {fmt_revr}"
   exe $"hi! diffText                  {fg_none}        {bg_none}     {fmt_none}"
-# }}}
-# VimSuggest: {{{
 
-  exe $"hi! VimSuggestMute            {fg_none}        {bg_none}         {fmt_none}"
-  exe $"hi! VimSuggestMatch           {fg_yellow}      {bg_window}       {fmt_none}"
-  exe $"hi! VimSuggestSel             {fg_none}        {bg_fg1}          {fmt_bold}"
+## }}}
+## VimSuggest: {{{
 
-# }}}
-# LSP: {{{
+  exe $"hi! VimSuggestMute            {fg_none}        {bg_none}     {fmt_none}"
+  exe $"hi! VimSuggestMatch           {fg_yellow}      {bg_window}   {fmt_none}"
+  exe $"hi! VimSuggestSel             {fg_none}        {bg_fg1}      {fmt_bold}"
+
+## }}}
+## LSP: {{{
 
   exe $"hi! LspDiagSignErrorText      {fg_red}         {bg_none}     {fmt_none}"
   exe $"hi! LspDiagSignWarningText    {fg_yellow}      {bg_none}     {fmt_none}"
   exe $"hi! LspDiagSignHintText       {fg_comment}     {bg_none}     {fmt_none}"
   exe $"hi! LspDiagSignInfoText       {fg_fg1}         {bg_none}     {fmt_none}"
 
-  exe $"hi! LspDiagVirtualTextError      {fg_red}         {bg_none}     {fmt_none}"
-  exe $"hi! LspDiagVirtualTextWarning    {fg_yellow}      {bg_none}     {fmt_none}"
-  exe $"hi! LspDiagVirtualTextHint       {fg_comment}     {bg_none}     {fmt_none}"
-  exe $"hi! LspDiagVirtualTextInfo       {fg_fg1}         {bg_none}     {fmt_none}"
+  exe $"hi! LspDiagVirtualTextError   {fg_red}         {bg_none}     {fmt_none}"
+  exe $"hi! LspDiagVirtualTextWarning {fg_yellow}      {bg_none}     {fmt_none}"
+  exe $"hi! LspDiagVirtualTextHint    {fg_comment}     {bg_none}     {fmt_none}"
+  exe $"hi! LspDiagVirtualTextInfo    {fg_fg1}         {bg_none}     {fmt_none}"
 
-# }}}
+## }}}
   # Incsearch
-  exe $"hi! LineNr                {fg_fg1}         {bg_none}         {fmt_none}"
-  exe $"hi! Visual                {fg_none}        {bg_none}         {fmt_revr}"
-  exe $"hi! StatusLine            {fg_none}        {bg_none}         {fmt_none}"
-  exe $"hi! StatusLineNC          {fg_fg1}         {bg_none}         {fmt_none}"
-  exe $"hi! MatchParen            {fg_foreground}  {bg_none}         {fmt_revr}"
+  exe $"hi! LineNr                    {fg_fg1}         {bg_none}     {fmt_none}"
+  exe $"hi! Visual                    {fg_none}        {bg_none}     {fmt_revr}"
+  exe $"hi! StatusLine                {fg_none}        {bg_none}     {fmt_none}"
+  exe $"hi! StatusLineNC              {fg_fg1}         {bg_none}     {fmt_none}"
+  exe $"hi! MatchParen                {fg_foregd}      {bg_none}     {fmt_revr}"
 
-  exe $"hi! Todo                  {fg_comment}     {bg_none}         {fmt_revr}"
-# SyntaxMatch: {{{
-  # exe $"hi! todo                 {fg_blue}        {bg_none}         {fmt_revb}"
-  # exe $"hi! fixme                {fg_red}         {bg_none}         {fmt_revb}"
-  # exe $"hi! note                 {fg_fg1}         {bg_none}         {fmt_revb}"
+  # exe $"hi! Todo                      {fg_comment}     {bg_none}     {fmt_revr}"
+## SyntaxMatch: {{{
 
-  # syntax match TODO /\v\_.<(TODO).*/hs=s+1  containedin=.*Comment
-  # syntax match FIXME /\v\_.<(FIXME).*/hs=s+1 containedin=.*Comment
-  # syntax match NOTE /\v\_.<(NOTE).*/hs=s+1  containedin=.*Comment
+  exe $"hi! TODO                        {fg_blue}        {bg_none}     {fmt_revb}"
+  exe $"hi! FIXME                       {fg_red}         {bg_none}     {fmt_revb}"
+  exe $"hi! NOTE                        {fg_fg1}         {bg_none}     {fmt_revb}"
 
-  # hi link TODO todo
-  # hi link FIXME fixme
-  # hi link NOTE note
+## }}}
 
-# }}}
+  exe $"hi! Error                     {fg_red}         {bg_none}     {fmt_revr}"
+  exe $"hi! Pmenu                     {fg_none}        {bg_window}   {fmt_none}"
+  exe $"hi! PmenuMatch                {fg_yellow}      {bg_window}   {fmt_none}"
+  exe $"hi! PmenuSel                  {fg_none}        {bg_fg1}      {fmt_bold}"
+  exe $"hi! PmenuThumb                {fg_comment}     {bg_comment}  {fmt_none}"
+  exe $"hi! PmenuSbar                 {fg_line}        {bg_line}     {fmt_none}"
 
-  exe $"hi! Error                 {fg_red}         {bg_none}         {fmt_revr}"
-  exe $"hi! Pmenu                 {fg_none}        {bg_window}       {fmt_none}"
-  exe $"hi! PmenuMatch            {fg_yellow}      {bg_window}       {fmt_none}"
-  exe $"hi! PmenuSel              {fg_none}        {bg_fg1}          {fmt_bold}"
-  exe $"hi! PmenuThumb            {fg_comment}     {bg_comment}      {fmt_none}"
-  exe $"hi! PmenuSbar             {fg_line}        {bg_line}         {fmt_none}"
+  exe $"hi! Search                    {fg_backgd}      {bg_foregd}   {fmt_none}"
+  #exe $"hi! IncSearch                {fg_orange}      {bg_none}     {fmt_revr}"
+  exe $"hi! CurSearch                 {fg_yellow}      {bg_none}     {fmt_revr}"
 
-  exe $"hi! Search                {fg_yellow}      {bg_window}       {fmt_bold}"
-  #exe $"hi! IncSearch             {fg_orange}      {bg_none}         {fmt_revr}"
-  exe $"hi! CurSearch             {fg_yellow}      {bg_none}         {fmt_revr}"
+## StatusLineCustom: {{{
 
-# StatusLineCustom: {{{
+  exe $"hi! StatLineSP                {fg_green}       {bg_none}     {fmt_none}"
+  exe $"hi! StatLineSP1               {fg_yellow}      {bg_none}     {fmt_none}"
+  exe $"hi! StatLineSD                {fg_blue}        {bg_none}     {fmt_none}"
 
-  exe $"hi! StatLineSP            {fg_green}       {bg_none}         {fmt_none}"
-  exe $"hi! StatLineSP1           {fg_yellow}      {bg_none}         {fmt_none}"
-  exe $"hi! StatLineSD            {fg_blue}        {bg_none}         {fmt_none}"
+## }}}
 
-# }}}
+  exe $"hi! Comment                   {fg_comment}     {bg_none}     {fmt_none}"
+  exe $"hi! NonText                   {fg_none}        {bg_none}     {fmt_none}"
+  exe $"hi! EndOfBuffer               {fg_none}        {bg_none}     {fmt_none}"
+  exe $"hi! Constant                  {fg_blue}        {bg_none}     {fmt_none}"
+  exe $"hi! String                    {fg_aqua}        {bg_none}     {fmt_none}"
+  exe $"hi! Character                 {fg_aqua}        {bg_none}     {fmt_none}"
+  exe $"hi! Boolean                   {fg_purple}      {bg_none}     {fmt_none}"
+  exe $"hi! Identifier                {fg_blue}        {bg_none}     {fmt_none}"
+  exe $"hi! Function                  {fg_green}       {bg_none}     {fmt_none}"
+  exe $"hi! VertSplit                 {fg_none}        {bg_none}     {fmt_none}"
+  exe $"hi! NonText                   {fg_none}        {bg_none}     {fmt_none}"
+  exe $"hi! SpecialKey                {fg_fg1}         {bg_none}     {fmt_none}"
 
-  exe $"hi! Comment               {fg_comment}     {bg_none}         {fmt_none}"
-  exe $"hi! NonText               {fg_none}        {bg_none}         {fmt_none}"
-  exe $"hi! EndOfBuffer           {fg_none}        {bg_none}         {fmt_none}"
-  exe $"hi! Constant              {fg_blue}        {bg_none}         {fmt_none}"
-  exe $"hi! String                {fg_aqua}        {bg_none}         {fmt_none}"
-  exe $"hi! Character             {fg_aqua}        {bg_none}         {fmt_none}"
-  exe $"hi! Boolean               {fg_purple}      {bg_none}         {fmt_none}"
-  exe $"hi! Identifier            {fg_none}        {bg_none}         {fmt_none}"
-  exe $"hi! Function              {fg_green}       {bg_none}         {fmt_bold}"
-  exe $"hi! VertSplit             {fg_none}        {bg_none}         {fmt_none}"
-  exe $"hi! NonText               {fg_none}        {bg_none}         {fmt_none}"
-  exe $"hi! SpecialKey            {fg_comment}     {bg_none}         {fmt_none}"
+  exe $"hi! Statement                 {fg_red}         {bg_none}     {fmt_none}"
+  exe $"hi! PreProc                   {fg_green}       {bg_none}     {fmt_none}"
+  exe $"hi! Special                   {fg_green}       {bg_none}     {fmt_none}"
+  exe $"hi! SpecialChar               {fg_purple}      {bg_none}     {fmt_none}"
+  exe $"hi! Type                      {fg_yellow}      {bg_none}     {fmt_none}"
 
-  exe $"hi! Statement             {fg_red}         {bg_none}         {fmt_none}"
-  exe $"hi! PreProc               {fg_green}       {bg_none}         {fmt_none}"
-  exe $"hi! Special               {fg_green}       {bg_none}         {fmt_none}"
-  exe $"hi! SpecialChar           {fg_purple}      {bg_none}         {fmt_none}"
-  exe $"hi! Type                  {fg_yellow}      {bg_none}         {fmt_none}"
+  exe $"hi! MemberAccess              {fg_none}        {bg_none}     {fmt_none}"
 
-  exe $"hi! SpellBad              {fg_none}        {bg_none}         {fmt_undr} ctermul={palette.cterm.red}"
-  exe $"hi! SpellCap              {fg_none}        {bg_none}         {fmt_undr} ctermul={palette.cterm.yellow}"
-  exe $"hi! SpellLocal            {fg_none}        {bg_none}         {fmt_undr} ctermul={palette.cterm.comment}"
-  exe $"hi! SpellRare             {fg_none}        {bg_none}         {fmt_undr} ctermul={palette.cterm.foreground}"
+  exe $"hi! SpellBad                  {fg_none}        {bg_none}     {fmt_undr}" # ctermul={palette.cterm.red}"
+  exe $"hi! SpellCap                  {fg_none}        {bg_none}     {fmt_undr}" # ctermul={palette.cterm.yellow}"
+  exe $"hi! SpellLocal                {fg_none}        {bg_none}     {fmt_undr}" # ctermul={palette.cterm.comment}"
+  exe $"hi! SpellRare                 {fg_none}        {bg_none}     {fmt_undr}" # ctermul={palette.cterm.foregd}"
 
 enddef
 
-
+# autocmd BufRead,BufNewFile * syn match parens /[(){}]/ | exe $"hi! parens {fg_orange} {bg_none} {fmt_none}"
 autocmd VimEnter,WinEnter * call ColorCorrect()
 
 # Following should occur after setting colorscheme.
-highlight! TrailingWhitespace ctermfg=8 cterm=reverse
-exe $"hi! TrailingWhitespace      {fg_comment}    {bg_none}        {fmt_none}"
+# highlight! TrailingWhitespace ctermfg=8 cterm=reverse
+exe $"hi! TrailingWhitespace          {fg_comment}     {bg_none}     {fmt_none}"
 match TrailingWhitespace /\s\+\%#\@<!$/
+
+autocmd Syntax * syn match TODO   /\v\_.<TODO/hs=s+1  containedin=.*Comment
+autocmd Syntax * syn match FIXME  /\v\_.<FIXME/hs=s+1 containedin=.*Comment
+autocmd Syntax * syn match NOTE   /\v\_.<NOTE/hs=s+1  containedin=.*Comment

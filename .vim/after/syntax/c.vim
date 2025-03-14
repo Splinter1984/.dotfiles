@@ -10,7 +10,7 @@
 
 
 " Highlight additional keywords in the comments
-" syn keyword cTodo contained BUG NOTE
+syn keyword cTodo TODO FIXME BUG NOTE contained
 
 
 " Highlight function names

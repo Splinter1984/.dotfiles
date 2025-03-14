@@ -16,10 +16,14 @@ vim9script
 #g:mapleader = ','
 g:maplocalleader = '\\'
 
+# To make undercurl work in iterm2 (:h E436, :h t_Cs)
+&t_Cs = "\e[4:3m"
+&t_Ce = "\e[4:0m"
+
 # 6=beam, 4=underline, 2=block
-&t_SI = "\e[6 q" #SI = INSERT mode
-&t_SR = "\e[4 q" #SR = REPLACE mode
-&t_EI = "\e[2 q" #EI = NORMAL mode (ALL ELSE)
+# &t_SI = "\e[6 q" #SI = INSERT mode
+# &t_SR = "\e[4 q" #SR = REPLACE mode
+# &t_EI = "\e[2 q" #EI = NORMAL mode (ALL ELSE)
 #&t_Cs = "\e[4:3m" #undercurl
 # Reset the cursor on start. After suspend-resume, cursor changes to beam even
 # in normal mode. This will prevent that.
@@ -40,8 +44,7 @@ autocmd! vimHints
 #autocmd BufEnter * if &ft == null_string | setlocal listchars=eol:\ ,tab:\ \ ,trail:\  | endif
 # autocmd BufEnter,FileType * :echom &ft expand('<amatch>') expand('<afile>') 'here'
 set list
-set listchars=eol:\ ,tab:\ \ ,trail:·
-
+set listchars=eol:\ ,tab:\󰁕·,trail:· #,leadmultispace:\┊\ \ \ 
 set fillchars=vert:│,fold:۰,diff:·,stl:─,stlnc:═,eob:\ 
 
 set clipboard=unnamedplus # Always use the system clipboard
@@ -88,12 +91,17 @@ set expandtab
 set re=1
 #set updatetime=1000 # reducing updatetime
 set dir=~/tmp
-# set termguicolors
-#set background=dark
 set t_Co=256
 set cmdheight=2
-# colorscheme custom
-#colorscheme hybrid #tangoX, sonoma, seoul256, hybrid_reverse/material, happy_hacking, dzo, clearance
+set lazyredraw
+
+# {{{
+#   set termguicolors
+#   set background=dark
+#   colorscheme gruvbox8
+# }}}
+
+# colorscheme hybrid #tangoX, sonoma, seoul256, hybrid_reverse/material, happy_hacking, dzo, clearance
 # colorsbox-stbright/stnight, deep-space, deus, herald, minimalist, seti, solorized, thegoodluck, tuttycolori,
 # visualstudio, wildcharm
 
@@ -137,9 +145,10 @@ endif
 
 # FIXME: unable to specify `gitgutter` variables in `opts.vim`.
 # GitGutter opts: {{{
+  g:gitgutter_set_sign_backgrounds = 1
   g:gitgutter_sign_added = '┃'
   g:gitgutter_sign_modified = '┃'
-  g:gitgutter_sign_removed = '-'
+  g:gitgutter_sign_removed = '┃'
   g:gitgutter_sign_removed_first_line = '‾'
   #g:gitgutter_sign_removed_above_and_below = '▊'
   g:gitgutter_sign_modified_removed = '~'
@@ -152,10 +161,91 @@ endif
   endif
 # }}}
 
-packadd lsp
-packadd vimcomplete
-packadd vim-gitgutter
-packadd vimsuggest
-packadd gutentags_plus
-packadd vim-gutentags
-packadd vim-shellcheck
+import "./autoload/text.vim"
+
+# -----------------------------------------------------------------------------
+# Plugins
+# -----------------------------------------------------------------------------
+
+# Download plug.vim if it doesn't exist yet
+if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+                \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+endif
+
+# Run PlugInstall if there are missing plugins
+autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)')) > 0
+            \| PlugInstall --sync | source $MYVIMRC
+            \| endif
+plug#begin("~/.local/share/vim-plug/")
+
+Plug 'yegappan/lsp'
+Plug 'girishji/vimcomplete'
+Plug 'girishji/vimsuggest'
+Plug 'girishji/ngram-complete.vim'
+Plug 'airblade/vim-gitgutter'
+Plug 'itspriddle/vim-shellcheck'
+Plug 'tpope/vim-surround'
+# Plug 'ludovicchabant/vim-gutentags'
+# Plug 'skywind3000/gutentags_plus'
+
+plug#end()
+
+# --------------------------
+# Cmdline auto-completion
+# --------------------------
+# set wim=noselect:lastused,full wop=pum,tagfile wcm=<C-@> wmnu
+# autocmd CmdlineChanged : timer_start(0, function(CmdComplete, [getcmdline()]))
+# def CmdComplete(cur_cmdline: string, timer: number)
+#     var [cmdline, curpos] = [getcmdline(), getcmdpos()]
+#     if cur_cmdline ==# cmdline # Avoid completing each char of keymaps and pasted text
+#       && !pumvisible() && curpos == cmdline->len() + 1
+#       && cmdline =~ '\%(\w\|[*/:.-]\)$' && cmdline !~ '^\d\+$'  # Reduce noise
+#         feedkeys("\<C-@>", "ti")
+#         set eventignore+=CmdlineChanged  # Suppress redundant completion attempts
+#         timer_start(0, (_) => {
+#             # using 'g' in substitute() fixes problem where ^@ gets inserted
+#             # when typing really fast
+#             getcmdline()->substitute('\%x00', '', 'g')->setcmdline()  # Vim inserts <C-@> when no completion items exist
+#             set eventignore-=CmdlineChanged
+#         })
+#     endif
+# enddef
+# autocmd CmdlineEnter : set bo+=error
+# autocmd CmdlineLeave : set bo-=error
+# cnoremap <Up> <End><C-U><Up>
+# cnoremap <Down> <End><C-U><Down>
+
+# nnoremap <leader><bs> :b <c-@>
+
+# ---------------------------
+# Insert Mode Auto-completion
+# ---------------------------
+# set cot=menuone,noselect,popup inf
+# autocmd TextChangedI * InsComplete()
+# autocmd TextChangedP * InsComplete(true)
+# var skip_next_complete = false
+# var prevline: string
+# def InsComplete(pumvisible = false)
+#     var curline = getline('.')
+#     if prevline !=# curline
+#         prevline = curline
+#         if !pumvisible
+#             if !skip_next_complete && curline->strpart(0, col('.') - 1) =~ '\S\{2}$'
+#                 feedkeys("\<c-n>", "ni")
+#             endif
+#         elseif complete_info(['selected']).selected == -1
+#             feedkeys("\<c-e>\<c-n>", "ni")
+#         endif
+#     endif
+#     skip_next_complete = false
+# enddef
+# def SkipNextComplete(): string
+#     skip_next_complete = true
+#     return "\<c-e>"
+# enddef
+# inoremap <silent> <c-e> <c-r>=<SID>SkipNextComplete()<cr>
+# inoremap <expr> <tab> pumvisible() ? "\<c-n>" : "\<tab>"
+# inoremap <expr> <s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
+
+#packadd taghighlight
