@@ -195,12 +195,12 @@ def ColorCorrect()
   exe $"hi! StatusLineNC              {fg_fg1}         {bg_none}     {fmt_none}"
   exe $"hi! MatchParen                {fg_foregd}      {bg_none}     {fmt_revr}"
 
-  # exe $"hi! Todo                      {fg_comment}     {bg_none}     {fmt_revr}"
+  exe $"hi! Todo                      {fg_comment}     {bg_none}     {fmt_revb}"
 ## SyntaxMatch: {{{
 
-  exe $"hi! TODO                        {fg_blue}        {bg_none}     {fmt_revb}"
-  exe $"hi! FIXME                       {fg_red}         {bg_none}     {fmt_revb}"
-  exe $"hi! NOTE                        {fg_fg1}         {bg_none}     {fmt_revb}"
+  exe $"hi! TODO                      {fg_blue}        {bg_none}     {fmt_revb}"
+  exe $"hi! FIXME                     {fg_red}         {bg_none}     {fmt_revb}"
+  exe $"hi! NOTE                      {fg_fg1}         {bg_none}     {fmt_revb}"
 
 ## }}}
 
@@ -259,6 +259,6 @@ autocmd VimEnter,WinEnter * call ColorCorrect()
 exe $"hi! TrailingWhitespace          {fg_comment}     {bg_none}     {fmt_none}"
 match TrailingWhitespace /\s\+\%#\@<!$/
 
-autocmd Syntax * syn match TODO   /\v\_.<TODO/hs=s+1  containedin=.*Comment
-autocmd Syntax * syn match FIXME  /\v\_.<FIXME/hs=s+1 containedin=.*Comment
-autocmd Syntax * syn match NOTE   /\v\_.<NOTE/hs=s+1  containedin=.*Comment
+autocmd Syntax * syn match TODO   /\v\_.<TODO./hs=s+1  containedin=.*Comment
+autocmd Syntax * syn match FIXME  /\v\_.<FIXME./hs=s+1 containedin=.*Comment
+autocmd Syntax * syn match NOTE   /\v\_.<NOTE./hs=s+1  containedin=.*Comment
