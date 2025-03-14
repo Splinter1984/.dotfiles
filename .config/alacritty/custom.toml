@@ -8,10 +8,12 @@
 
 # Default colors
 [colors.primary]
-background = '#0e1419'
-foreground = '#eaeaea'
-#background = '#1c1c1c'
-#foreground = '#d0d0d0'
+background = '#121212'
+foreground = '#d0d0d0'
+# background = '#191919'
+# foreground = '#cccccc'
+# background = '#1c1c1c'
+# foreground = '#d0d0d0'
 
 [colors.cursor]
 text = '#1d1f21'
@@ -19,7 +21,7 @@ cursor = '#f19618'
 
 # Normal colors
 [colors.normal]
-black   = '#000000'
+black   = '#212121'
 red     = '#d54e53'
 green   = '#b9ca4a'
 yellow  = '#e6c547'
