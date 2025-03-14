@@ -69,7 +69,7 @@ element {
 
 element selected.normal {
   border: 0px 0px 2px 0px;
-  border-color: @contrast4;
+  border-color: @contrast2;
   text-color: @light2; 
 }
 

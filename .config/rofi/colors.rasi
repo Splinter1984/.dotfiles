@@ -1,20 +1,15 @@
 * {
-  background: #2a2f335f;
-  foreground: #bfddb2;
+  background: #262626;
+  foreground: #d0d0d0;
 
-  dark0: #2a2f33;
-  dark1: #31363b;
-  dark2: #373d41;
-  dark3: #3F464B;
+  dark0: #262626;
+  dark1: #404040;
+  dark2: #595959;
+  dark3: #737373;
 
-  light0: #a89984;
-  light1: #d5c4a1;
-  light2: #f9f5d7;
-
-  subtle0: #a89984;
-  subtle1: #689d6a;
-  subtle2: #b16286;
-  subtle3: #458588;
+  light0: #e8e8e8;
+  light1: #f6f6f6;
+  light2: #fafafa;
 
   contrast0: #fb4934;
   contrast1: #b8bb26;

@@ -42,6 +42,10 @@ super + q
 #super + alt + \
 #  rofi -show window -theme iconic
 
+# rofi emoji
+super + z
+  rofi -show emoji -modi emoji -theme iconic
+
 # Reload Polybar
 super + shift + Escape
 	~/.config/polybar/launch.sh

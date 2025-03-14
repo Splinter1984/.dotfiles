@@ -49,9 +49,9 @@ lock() {
                 --keyhl-color=bfddb2 --bshl-color=d39bb6 \
                 --line-uses-inside \
                 --time-str="%H:%M:%S" --time-pos="w/2:h/2-70" \
-                --time-color=bfddb2 --timeoutline-color=868686  --time-font="$CLOCK_FONT:style=Italic" --time-size=64 \
+                --time-color=d0d0d0 --timeoutline-color=868686  --time-font="$CLOCK_FONT:style=Italic" --time-size=64 \
                 --date-str="%a, %d %b %Y" --date-pos="tx:ty+42"\
-                --date-color=b3cfa7 --date-font="$FONT:style=Bold" --date-size=24 \
+                --date-color=d0d0d0 --date-font="$FONT:style=Bold" --date-size=24 \
                 --greeter-text="\"SEE YOU SPACE SAMURAI\"" \
                 --greeter-pos="w/2:h/2+18"\
                 --greeter-color=d39bb6 --greeter-font="$FONT" --greeter-size=14 \
