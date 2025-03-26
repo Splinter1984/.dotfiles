@@ -82,6 +82,11 @@ set laststatus=2 # always show statusline
 # set rulerformat=%80(%=%f\ %h%m%r\ %-6y\ %-5.(%l,%c%V%)\ %P%)
 set cursorline
 set textwidth=79
+# {{{
+# enable colorcolumn for all filetype, but quickfix and help
+  set colorcolumn=81
+  au FileType qf,help setlocal colorcolumn=
+# }}}
 set cc=+1
 set nowrap
 set shiftwidth=2
@@ -179,15 +184,16 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)')) > 
             \| endif
 plug#begin("~/.local/share/vim-plug/")
 
-Plug 'yegappan/lsp'
-Plug 'girishji/vimcomplete'
-Plug 'girishji/vimsuggest'
-Plug 'girishji/ngram-complete.vim'
-Plug 'airblade/vim-gitgutter'
-Plug 'itspriddle/vim-shellcheck'
-Plug 'tpope/vim-surround'
-# Plug 'ludovicchabant/vim-gutentags'
-# Plug 'skywind3000/gutentags_plus'
+  Plug 'yegappan/lsp'
+  Plug 'girishji/vimcomplete'
+  Plug 'girishji/vimsuggest'
+  Plug 'girishji/ngram-complete.vim'
+  Plug 'airblade/vim-gitgutter'
+  Plug 'itspriddle/vim-shellcheck'
+  Plug 'tpope/vim-surround'
+  # Plug 'ludovicchabant/vim-gutentags'
+  # Plug 'skywind3000/gutentags_plus'
+  Plug 'rhysd/conflict-marker.vim'
 
 plug#end()
 

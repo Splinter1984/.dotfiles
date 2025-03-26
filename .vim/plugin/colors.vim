@@ -29,8 +29,8 @@ palette.cterm.changefg   = "5"
 palette.cterm.delbg      = "1"
 palette.cterm.delfg      = "1"
 palette.cterm.textfg     = "none"
-palette.cterm.darkblue   = "none"
-palette.cterm.darkcyan   = "none"
+palette.cterm.darkblue   = "25"
+palette.cterm.darkcyan   = "38"
 palette.cterm.darkred    = "none"
 palette.cterm.darkpurple = "13"
 
@@ -186,6 +186,16 @@ def ColorCorrect()
   exe $"hi! LspDiagVirtualTextWarning {fg_yellow}      {bg_none}     {fmt_none}"
   exe $"hi! LspDiagVirtualTextHint    {fg_comment}     {bg_none}     {fmt_none}"
   exe $"hi! LspDiagVirtualTextInfo    {fg_fg1}         {bg_none}     {fmt_none}"
+
+## }}}
+## GitConflictMarker: {{{
+
+  # exe $"hi! ConflictMarkerBegin       {fg_none}        {bg_none}     {fmt_bold}"
+  # exe $"hi! ConflictMarkerOurs        {fg_none}        {bg_none}     {fmt_none}"
+  # exe $"hi! ConflictMarkerTheirs      {fg_none}        {bg_none}     {fmt_none}"
+  # exe $"hi! ConflictMarkerEnd         {fg_none}        {bg_none}     {fmt_bold}"
+  # exe $"hi! ConflictMarkerCommonAncestorsHunk
+  #       \                             {fg_none}        {bg_none}     {fmt_bold}"
 
 ## }}}
   # Incsearch

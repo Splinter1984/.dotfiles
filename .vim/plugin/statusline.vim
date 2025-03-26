@@ -60,10 +60,11 @@ def! g:MyActiveStatusline(): string
     # Use 1<c-g> or <c-g> to get path to current buffer
     var split_s = '%#StatLineSP#[%*'
     var split_e = '%#StatLineSP#]%*'
-    var sourcedir = $"%#StatLineSD#{substitute(getcwd(), '^.*/', '', '')}%*/"
-    var shortpath = substitute(expand('%:f'), '^./', '', '')
-    if stridx(expand('%:p'), getcwd()) < 0
-      shortpath = $'%#StatusLineNC#{shortpath}%*'
+    var sourcedir = $"%#StatLineSD#{substitute(getcwd(), '^.*/', '', '')}%*"
+    var shortpath = $"/{substitute(expand('%:f'), '^./', '', '')}"
+    var full_path = expand('%:p')
+    if len(full_path) > 0 && stridx(full_path, getcwd()) < 0
+      shortpath = $'%#StatusLineNC#:{expand('%:f')}%*'
     endif
     #var gtags = gutentags#statusline('[', ']')
     # var width = winwidth(0) - 30 - gitstr->len() - diagstr->len() - shortpath->len() - elapsed->len()

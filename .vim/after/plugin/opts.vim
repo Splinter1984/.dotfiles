@@ -70,7 +70,9 @@ if exists("g:loaded_lsp")
         # vsnipSupport: false,
         ignoreMissingServer: true,
         # autoComplete: false,  # when false, it sets omnifunc (use <c-x><c-o>)
-        outlineWinSize: 30
+        omniComplete: true,
+        outlineWinSize: 30,
+        usePopupInCodeAction: false,
     })
     if executable('clangd')
         g:LspAddServer([{
@@ -94,7 +96,7 @@ if exists("g:loaded_lsp")
                   "flake8": {
                     "enabled": v:true,
                     "exclude": ['.git', '__pycache__', 'build'],
-                    "ignore": ["E501", "E231", "E231", "F405", "F841", "D", "CNL", "Q000"],
+                    "ignore": ["E501", "E231", "E231", "F405", "F841", "D", "CNL", "Q000", "I100"],
                     "per-file-ignores": {
                       "__init__.py": "F401"
                     },
@@ -168,6 +170,9 @@ endif
 
 if exists("g:loaded_gitgutter")
   # FIXME: currently not working.
+  # g:gitgutter_map_keys = 0
+  nmap ]h <Plug>(GitGutterNextHunk)
+  nmap [h <Plug>(GitGutterPrevHunk)
   if exists("#gitgutter")
     #autocmd! gitgutter QuickFixCmdPre *vimgrep*
     #autocmd! gitgutter QuickFixCmdPost *vimgrep*
@@ -351,4 +356,28 @@ if exists("g:loaded_vimsuggest")
     # 'ls' with ** is slow
     # ls lists directories when file glob fails. (N) removes (.) when (.) fails.
     # nnoremap <leader><space> :VSCmd e ls -1 **/*(.N)<left><left><left><left><left>
+endif
+
+if exists("g:loaded_conflict_marker")
+  # disable the default highlight group
+  # g:conflict_marker_highlight_group = ''
+  g:conflict_marker_highlight_group = ''
+
+  # Make sure the definitions are always available, even it a colorscheme or a
+  # ftplugin or something clears all highlights
+  def Define_conflict_marker_highlights()
+      hi def ConflictMarkerBegin               term=none cterm=none ctermfg=Gray ctermbg=DarkRed
+      hi def ConflictMarkerOurs                term=none cterm=none ctermfg=DarkRed
+      hi def ConflictMarkerCommonAncestors     term=none cterm=none ctermfg=Gray ctermbg=4
+      hi def ConflictMarkerCommonAncestorsHunk term=none cterm=none ctermfg=DarkBlue
+      hi def ConflictMarkerSeparator           term=none cterm=none ctermfg=Gray ctermbg=3
+      hi def ConflictMarkerTheirs              term=none cterm=none ctermfg=DarkGreen
+      hi def ConflictMarkerEnd                 term=none cterm=none ctermfg=Gray ctermbg=DarkGreen
+  enddef
+
+  augroup ConflictMarkerHighlight
+  au ColorScheme * call Define_conflict_marker_highlights()
+  au FileType * call Define_conflict_marker_highlights()
+  au Syntax * call Define_conflict_marker_highlights()
+  augroup END
 endif
