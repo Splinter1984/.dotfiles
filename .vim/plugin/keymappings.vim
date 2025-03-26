@@ -43,3 +43,8 @@ vnoremap <C-_> <Esc>/\%V
 # visually select recent pasted (or typed) text
 #   remember `] takes you to end of pasted buffer, or use 'gp' to paste
 nnoremap gs `[v`]
+
+import autoload 'comment.vim'
+nnoremap <silent> <expr> gc comment.Toggle()
+xnoremap <silent> <expr> gc comment.Toggle()
+nnoremap <silent> <expr> gcc comment.Toggle() .. '_'
