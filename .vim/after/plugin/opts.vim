@@ -141,6 +141,43 @@ if exists("g:loaded_lsp")
             path: exepath('rust-analyzer'),
         }])
     endif
+    # if executable('perl')
+    #   g:LspAddServer([{
+    #       name: 'perl',
+    #       filetype: ['perl'],
+    #       path: '/usr/bin/perl',
+    #       args: [
+    #         "-MPerl::LanguageServer", "-e", "Perl::LanguageServer::run", "--",
+    #         "--debug"
+    #       ]
+    #         # "--port", "13603", "--nostdio", "0",]
+    #   }])
+    # endif
+    if executable('pls')
+      g:LspAddServer([{
+        name: 'perl',
+        filetype: ['perl'],
+        path: '/usr/local/bin/pls',
+        args: [],
+        workspaceConfig: {
+          'pls': {
+            'inc': [ '/my/perl/5.34/lib', ],  # add list of dirs to @INC
+            #'cwd' = { '/my/projects' },   # working directory for PLS
+            'perlcritic': { 'enabled': 1, },  # use perlcritic and pass a non-default location for its config
+            'syntax': { 'enabled': 1, 'perl': '/usr/bin/perl', }, # enable syntax checking and use a non-default perl binary
+            #'perltidy' = { 'perltidyrc' = '/my/projects/.perltidyrc' } # non-default location for perltidy's config
+          },
+        },
+      }])
+    endif
+    if executable('awk-language-server')
+      g:LspAddServer([{
+        name: 'awkls',
+        filetype: 'awk',
+        path: '/usr/local/bin/awk-language-server',
+        args: []
+      }])
+    endif
     def LSPUserSetup()
         nnoremap <buffer> [e :LspDiagPrev<CR>| # think as 'error' message
         nnoremap <buffer> ]e :LspDiagNext<CR>
