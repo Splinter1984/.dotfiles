@@ -193,7 +193,7 @@ plug#begin("~/.local/share/vim-plug/")
   Plug 'itspriddle/vim-shellcheck'
   Plug 'machakann/vim-sandwich'
   # Plug 'tpope/vim-surround'
-  # Plug 'ludovicchabant/vim-gutentags'
+  Plug 'ludovicchabant/vim-gutentags'
   # Plug 'skywind3000/gutentags_plus'
   Plug 'rhysd/conflict-marker.vim'
 
