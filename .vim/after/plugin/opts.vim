@@ -218,9 +218,9 @@ if exists("g:loaded_gitgutter")
 endif
 
 if exists("g:gutentags_enabled")
-  g:gutentags_modules = ['ctags']
+  g:gutentags_modules = ['ctags', 'cscope']
   # generate datebases in my cache directory, prevent gtags files polluting my project
-  g:gutentags_cache_dir = expand('~/.cache/tags')
+  # g:gutentags_cache_dir = expand('~/.cache/tags')
   # resolve all sym links please!
   g:gutentags_resolve_symlinks = 1
   # change focus to quickfix window after search (optional).
