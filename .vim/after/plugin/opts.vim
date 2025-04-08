@@ -218,7 +218,7 @@ if exists("g:loaded_gitgutter")
 endif
 
 if exists("g:gutentags_enabled")
-  g:gutentags_modules = ['ctags', 'cscope']
+  g:gutentags_modules = ['ctags'] # , 'cscope']
   # generate datebases in my cache directory, prevent gtags files polluting my project
   # g:gutentags_cache_dir = expand('~/.cache/tags')
   # resolve all sym links please!
@@ -417,3 +417,4 @@ if exists("g:loaded_conflict_marker")
   au Syntax * call Define_conflict_marker_highlights()
   augroup END
 endif
+

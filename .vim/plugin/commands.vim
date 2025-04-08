@@ -40,5 +40,8 @@ command! FixTrailingSpaces :exe 'normal! m`'<bar>
 import autoload "text.vim"
 command! -range FixSpaces text.FixSpaces(<line1>, <line2>)
 
+# underline current line
+command! -nargs=1 Underline text.Underline(<q-args>)
+
 # syntax group names under cursor
 command! Inspect :echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')

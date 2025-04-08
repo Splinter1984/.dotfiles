@@ -26,29 +26,29 @@ def Diagstr(): string
     return diagstr
 enddef
 
-# XXX: nice todo.
+# XXX: nice have.
 # {{{
-var currentmode = {
-    \ 'n':  'NORMAL',
-    \ 'no': 'NORMAL,OP',
-    \ 'v':  'VISUAL',
-    \ 'V':  'V-LINE',
-    \ '^V': 'V-BLOCK',
-    \ 's':  'SELECT',
-    \ 'S':  'S-LINE',
-    \ '^S': 'S-BLOCK',
-    \ 'i':  'INSERT',
-    \ 'R':  'REPLACE',
-    \ 'Rv': 'V-REPLACE',
-    \ 'c':  'COMMAND',
-    \ 'cv': 'VIM EX',
-    \ 'ce': 'EX',
-    \ 'r':  'PROMPT',
-    \ 'rm': 'MORE',
-    \ 'r?': 'CONFIRM',
-    \ '!':  'SHELL',
-    \ 't':  'TERMINAL'
-    \}
+# var currentmode = {
+#     \ 'n':  'NORMAL',
+#     \ 'no': 'NORMAL,OP',
+#     \ 'v':  'VISUAL',
+#     \ 'V':  'V-LINE',
+#     \ '^V': 'V-BLOCK',
+#     \ 's':  'SELECT',
+#     \ 'S':  'S-LINE',
+#     \ '^S': 'S-BLOCK',
+#     \ 'i':  'INSERT',
+#     \ 'R':  'REPLACE',
+#     \ 'Rv': 'V-REPLACE',
+#     \ 'c':  'COMMAND',
+#     \ 'cv': 'VIM EX',
+#     \ 'ce': 'EX',
+#     \ 'r':  'PROMPT',
+#     \ 'rm': 'MORE',
+#     \ 'r?': 'CONFIRM',
+#     \ '!':  'SHELL',
+#     \ 't':  'TERMINAL'
+#     \}
 # }}}
 
 # Make this function global. 'statusline' option is processed in global context,
@@ -66,7 +66,7 @@ def! g:MyActiveStatusline(): string
     if len(full_path) > 0 && stridx(full_path, getcwd()) < 0
       shortpath = $'%#StatusLineNC#:{expand('%:f')}%*'
     endif
-    #var gtags = gutentags#statusline('[', ']')
+    # var gtags = gutentags#statusline('[', ']')
     # var width = winwidth(0) - 30 - gitstr->len() - diagstr->len() - shortpath->len() - elapsed->len()
     # var width = winwidth(0) - 30 - gitstr->len() - diagstr->len() - elapsed->len()
     # var buflinestr = BuflineStr(width)
@@ -74,7 +74,7 @@ def! g:MyActiveStatusline(): string
     # echom $'{diagstr} {buflinestr} %= %y {elapsed}{shortpath} ≡ %P (%l:%c) '
     # return $'{diagstr} {buflinestr} %= %y {elapsed}{shortpath} ≡ %P (%l:%c) '
 
-    # TODO: call {gutentags#statusline("[","]")}
+    # XXX: call {gutentags#statusline("[","]")}
     return $'{!empty(shortpath) ? $'{diagstr} {split_s}{sourcedir}{shortpath}{gitstr}{split_e}{gitbranch}' : ''} %#StatLineSP#%=%*%* %y ≡ %P %l:%c%V '
 enddef
 

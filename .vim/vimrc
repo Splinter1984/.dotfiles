@@ -1,6 +1,6 @@
 " ==============================================================================
 " Maintainer:      Splinter1984 <https://github.com/Splinter1984>
-" Last Change:     Feb 25, 2025
+" Last Change:     Apr 7, 2025
 " ==============================================================================
 
 if !has('vim9script') ||  v:version < 900
@@ -167,7 +167,14 @@ endif
   endif
 # }}}
 
-import "./autoload/text.vim"
+# habamax-rst opts: {{{
+  # g:rst_syntax_code_list = {
+  #   'vim': ['vim'], 'sh': ['sh'],
+  #   'python': ['python'], 'c': ['c'],
+  #   'cpp': ['cpp'], 'xml': ['xml'],
+  #   'yaml': ['yaml']
+  # }
+# }}}
 
 # -----------------------------------------------------------------------------
 # Plugins
@@ -196,6 +203,7 @@ plug#begin("~/.local/share/vim-plug/")
   Plug 'ludovicchabant/vim-gutentags'
   # Plug 'skywind3000/gutentags_plus'
   Plug 'rhysd/conflict-marker.vim'
+  # Plug 'habamax/vim-rst'
 
 plug#end()
 
