@@ -44,6 +44,8 @@ vnoremap <C-_> <Esc>/\%V
 #   remember `] takes you to end of pasted buffer, or use 'gp' to paste
 nnoremap gs `[v`]
 
+nnoremap <leader>vs :set spell!<CR><Bar>:echo "Spell Check: " .. strpart("OffOn", 3 * &spell, 3)<CR>
+
 import autoload 'comment.vim'
 nnoremap <silent> <expr> gc comment.Toggle()
 xnoremap <silent> <expr> gc comment.Toggle()
