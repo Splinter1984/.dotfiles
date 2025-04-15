@@ -204,6 +204,10 @@ plug#begin("~/.local/share/vim-plug/")
   # Plug 'skywind3000/gutentags_plus'
   Plug 'rhysd/conflict-marker.vim'
   # Plug 'habamax/vim-rst'
+  Plug 'google/vim-maktaba'
+  Plug 'google/vim-coverage'
+  Plug 'google/vim-glaive'
+  Plug 'some00/vimgcov'
 
 plug#end()
 
