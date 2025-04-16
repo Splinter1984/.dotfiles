@@ -1,0 +1,5 @@
+CompileFlags:
+  # NOTE: on gcc-14 a specially when working with coverage `clangd` force this
+  # flag as unknown option, it's pretty annoing cause lsp determine it as a
+  # error.
+  Remove: -fcondition-coverage
