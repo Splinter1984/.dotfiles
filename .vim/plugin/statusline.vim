@@ -2,8 +2,8 @@ vim9script
 
 def Gitbranch(): string
   var cmd = "git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \\(.*\\)/\\1/'"
-  var branch = $'%#StatLineSP1#(%*{system(cmd)[ : -2]}%#StatLineSP1#)%*'
-  return stridx(branch, "fatal") != -1 ? '' : branch
+  var branch_name = system(cmd)[ : -2]
+  return (empty(branch_name) || (stridx(branch_name, "fatal") != -1)) ? '' : $'%#StatLineSP1#(%*{branch_name}%#StatLineSP1#)%*'
 enddef
 
 def Gitstr(): string
@@ -75,7 +75,7 @@ def! g:MyActiveStatusline(): string
     # return $'{diagstr} {buflinestr} %= %y {elapsed}{shortpath} ≡ %P (%l:%c) '
 
     # XXX: call {gutentags#statusline("[","]")}
-    return $'{!empty(shortpath) ? $'{diagstr} {split_s}{sourcedir}{shortpath}{gitstr}{split_e}{gitbranch}' : ''} %#StatLineSP#%=%*%* %y ≡ %P %l:%c%V '
+    return $'{diagstr} {split_s}{sourcedir}{!empty(substitute(shortpath, '/', '', '')) ? $'{shortpath}{gitstr}' : ''}{split_e}{gitbranch} %#StatLineSP#%=%*%* %y ≡ %P %l:%c%V '
 enddef
 
 def! g:MyInactiveStatusline(): string
