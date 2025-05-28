@@ -50,6 +50,12 @@ super + z
 super + shift + Escape
 	~/.config/polybar/launch.sh
 
+# take a screenshot
+super + Print
+  ~/.config/scripts/screenshot.sh -s clip -m full
+super + shift + Print
+  ~/.config/scripts/screenshot.sh -s clip -m select
+
 #
 # bspwm hotkeys
 #

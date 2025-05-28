@@ -6,6 +6,7 @@ decorations = "None"
 
 [font]
 normal = { family = "HackNerdFontMono" }
+# normal = { family = "OGCourierZeroSlash" }
 size = 11.0
 
 [cursor]

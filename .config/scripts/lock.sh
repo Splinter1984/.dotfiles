@@ -49,14 +49,14 @@ lock() {
                 --keyhl-color=bfddb2 --bshl-color=d39bb6 \
                 --line-uses-inside \
                 --time-str="%H:%M:%S" --time-pos="w/2:h/2-70" \
-                --time-color=d0d0d0 --timeoutline-color=868686  --time-font="$CLOCK_FONT:style=Italic" --time-size=64 \
+                --time-color=d0d0d0 --timeoutline-color=868686  --time-font="$CLOCK_FONT:style=Bold" --time-size=64 \
                 --date-str="%a, %d %b %Y" --date-pos="tx:ty+42"\
                 --date-color=d0d0d0 --date-font="$FONT:style=Bold" --date-size=24 \
                 --greeter-text="\"SEE YOU SPACE SAMURAI\"" \
                 --greeter-pos="w/2:h/2+18"\
-                --greeter-color=d39bb6 --greeter-font="$FONT" --greeter-size=14 \
+                --greeter-color=d39bb6 --greeter-font="$FONT:style=Italic" --greeter-size=14 \
                 --keylayout 2 --layout-pos="18:h-18" --layout-color=999f93 --layout-align=1\
-                --layout-font="Hack Nerd Font Mono" \
+                --layout-font="$FONT" \
                 --verif-text="Matching Passphrase.." --verif-pos="w/2:h-18" \
                 --verif-color=999f93 --verif-font="$FONT" --verif-size=14 \
                 --wrong-text="Invalid Passphrase!" --wrong-pos="w/2:h-18" \

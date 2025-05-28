@@ -19,11 +19,11 @@ case "$1" in
   ;;
 -mute)
   if [ $(pamixer --get-mute) == true ]; then
-    pamixer -u 
+    pamixer -u
     dunstify " Unmute" \
       -u low \
       -h string:synchronous:volume \
-      -i audio-volume-high 
+      -i audio-volume-high
   else
     pamixer -m
     dunstify "󰸈 Mute" \
