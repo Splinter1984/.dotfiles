@@ -47,6 +47,7 @@ set list
 set listchars=eol:\ ,tab:\󰁕·,trail:· #,leadmultispace:\┊\ \ \ 
 set fillchars=vert:│,fold:۰,diff:·,stl:─,stlnc:═,eob:\ 
 
+set noshowcmd  # XXX: Stop echoing keymapped typed keys in the bottom row
 set clipboard=unnamedplus # Always use the system clipboard
 set mouse= # XXX: Disable mouse (set by defaults.vim). Needed by macos terminal app.
 set number # line numbering
