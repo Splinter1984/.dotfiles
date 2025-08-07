@@ -1,0 +1,13 @@
+/*
+ * ==================================================
+ * Project: "MinimalFox"
+ * Original Author: <https://github.com/Jamir-boop>
+ * Project Link: <https://github.com/Jamir-boop/minimalisticfox>
+ * ==================================================
+ * */
+
+@-moz-document url-prefix(about:) {
+  * {
+    font-family: Hack Nerd Font Mono !important;
+  }
+}
