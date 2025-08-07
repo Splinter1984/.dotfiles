@@ -23,7 +23,7 @@ module=$([ "$act" == "$wifi" ] && echo "eth" || [ "$act" == "$eth" ] && echo "wl
 if [ -n "$module" ]; then
   polybar-msg action "#$module.module_hide"
 fi
-echo 43245 | tee /sys/class/backlight/intel_backlight/brightness
+echo 52845 | tee /sys/class/backlight/intel_backlight/brightness
 pactl set-source-volume @DEFAULT_SOURCE@ 25%
 pactl set-source-mute @DEFAULT_SOURCE@ 1
-pactl set-sink-volume @DEFAULT_SINK@ 5%
+pactl set-sink-volume @DEFAULT_SINK@ 15%

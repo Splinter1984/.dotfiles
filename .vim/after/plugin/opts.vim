@@ -418,3 +418,6 @@ if exists("g:loaded_conflict_marker")
   augroup END
 endif
 
+if exists("g:loaded_patchreview")
+  g:patchreview_disable_syntax = 0
+endif

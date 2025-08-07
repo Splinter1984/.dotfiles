@@ -2,7 +2,7 @@
 
 #### MONITORS ####
 bspc monitor -d 1 2 3 4 5 6 7 8 9
-bspc rule -a '*' state=floating
+bspc rule -a '*' state=tiled
 
 external_monitor=$(xrandr | awk '/connected/ && /[[:digit:]]x[[:digit:]].*+/{print $1}')
 top_monitor=$external_monitor | grep -w "DP-2-1"

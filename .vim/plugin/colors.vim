@@ -259,6 +259,12 @@ def ColorCorrect()
   exe $"hi! SpellLocal                {fg_none}        {bg_none}     {fmt_undr}" # ctermul={palette.cterm.comment}"
   exe $"hi! SpellRare                 {fg_none}        {bg_none}     {fmt_undr}" # ctermul={palette.cterm.foregd}"
 
+  exe $"hi! Folded                    {fg_blue}        {bg_none}     {fmt_none}"
+  exe $"hi! FoldColumn                {fg_none}        {bg_none}     {fmt_none}"
+
+  exe $"hi! TabLine                   {fg_fg1}         {bg_none}     {fmt_none}"
+  exe $"hi! TabLineFill               {fg_none}        {bg_none}     {fmt_none}"
+
 enddef
 
 # autocmd BufRead,BufNewFile * syn match parens /[(){}]/ | exe $"hi! parens {fg_orange} {bg_none} {fmt_none}"

@@ -53,11 +53,17 @@ color.project.none=
 color.uda.priority.H=red
 color.uda.priority.M=yellow
 color.uda.priority.L=
+color.uda.priority. =gray7
 
 # Tags
 color.tag.next=bold yellow
 color.tag.none=
 color.tagged=
+
+# -----------------------------------------------------------------------------
+# Special tags colors
+# -----------------------------------------------------------------------------
+color.keyword.:in_review:=magenta
 
 # Due
 color.due=red

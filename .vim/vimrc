@@ -209,6 +209,7 @@ plug#begin("~/.local/share/vim-plug/")
   Plug 'google/vim-coverage'
   Plug 'google/vim-glaive'
   Plug 'some00/vimgcov'
+  Plug 'junkblocker/patchreview-vim'
 
 plug#end()
 
