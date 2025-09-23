@@ -329,7 +329,8 @@ if exists("g:loaded_vimsuggest")
     g:vimsuggest_shell = true  # Needed for '**', {}, etc. shell expansion in VSExec ggrep
     # NOTE: 'x' inside {} below is just a placeholder ({foo} does not work)
     #       VSGrep does not do highlight by default (call AddHighlightHook for highlight)
-    nnoremap <leader>vg :VSExec ggrep -REIHns "" --exclude-dir={.git,x} --exclude=".*"<c-left><c-left><left><left>
+    # nnoremap <leader>vg :VSExec ggrep -REIHns "" --exclude-dir={.git,x} --exclude=".*"<c-left><c-left><left><left>
+    nnoremap <leader>vg :VSExec grep -REIHns "" --exclude-dir={.git,x} --exclude=".*"<c-left><c-left><left><left>
 
     noremap  <leader>fb :VSBuffer<space>
 

@@ -10,57 +10,51 @@
 
 
 " Highlight additional keywords in the comments
-syn keyword cTodo TODO FIXME BUG NOTE contained
+syn keyword cTodo TODO FIXME BUG NOTE todo fixme bug note contained
 
+" see for :h c.vim
+g:c_syntax_for_h = 1
 
 " Highlight function names
-if get(g:, 'cpp_function_highlight', 1)
-    syn match cUserFunction "\<\h\w*\ze\_s\{-}(\%(\*\h\w*)\_s\{-}(\)\@!"
-    syn match cUserFunctionPointer "\%((\s*\*\s*\)\@6<=\h\w*\ze\s*)\_s\{-}(.*)"
-    hi def link cUserFunction Function
-    hi def link cUserFunctionPointer Function
-endif
+syn match cUserFunction "\<\h\w*\ze\_s\{-}(\%(\*\h\w*)\_s\{-}(\)\@!"
+syn match cUserFunctionPointer "\%((\s*\*\s*\)\@6<=\h\w*\ze\s*)\_s\{-}(.*)"
+hi def link cUserFunction Function
+hi def link cUserFunctionPointer Function
 
 
 " Highlight struct/class member variables
-if get(g:, 'cpp_member_highlight', 1)
-    syn match cMemberAccess "\.\|->" nextgroup=cStructMember,cppTemplateKeyword
-    hi def link cMemberAccess MemberAccess
-    syn match cStructMember "\<\h\w*\>\%((\|<\)\@!" contained
-    syn cluster cParenGroup add=cStructMember
-    syn cluster cPreProcGroup add=cStructMember
-    syn cluster cMultiGroup add=cStructMember
-    hi! def link cStructMember Identifier
+syn match cMemberAccess "\.\|->" nextgroup=cStructMember,cppTemplateKeyword
+hi def link cMemberAccess MemberAccess
+syn match cStructMember "\<\h\w*\>\%((\|<\)\@!" contained
+syn cluster cParenGroup add=cStructMember
+syn cluster cPreProcGroup add=cStructMember
+syn cluster cMultiGroup add=cStructMember
+hi! def link cStructMember Identifier
 
-    if &filetype ==# 'cpp'
-        syn keyword cppTemplateKeyword template
-        hi def link cppTemplateKeyword cppStructure
-    endif
+if &filetype ==# 'cpp'
+    syn keyword cppTemplateKeyword template
+    hi def link cppTemplateKeyword cppStructure
 endif
 
 
 " Highlight names in struct, union and enum declarations
-if get(g:, 'cpp_type_name_highlight', 1)
-    syn match cTypeName "\%(\%(\<struct\|union\|enum\)\s\+\)\@8<=\h\w*"
-    syn match cType "\h\w*_t\w\@!"
-    hi def link cTypeName Type
-    hi def link cType     Type
+syn match cTypeName "\%(\%(\<struct\|union\|enum\)\s\+\)\@8<=\h\w*"
+syn match cType "\h\w*_t\w\@!"
+hi def link cTypeName Type
+hi def link cType     Type
 
-    if &filetype ==# 'cpp'
-        syn match cTypeName "\%(\%(\<class\|using\|concept\|requires\)\s\+\)\@10<=\h\w*"
-    endif
+if &filetype ==# 'cpp'
+    syn match cTypeName "\%(\%(\<class\|using\|concept\|requires\)\s\+\)\@10<=\h\w*"
 endif
 
 
 " Highlight operators
-if get(g:, 'cpp_operator_highlight', 1)
-    syn match cOperator "[?!~*&%<>^|=,+]"
-    syn match cOperator "[][]"
-    syn match cOperator "[^:]\@1<=:[^:]\@="
-    syn match cOperator "-[^>]"me=e-1
-    syn match cOperator "/[^/*]"me=e-1
-    hi! def link cOperator MemberAccess
-endif
+syn match cOperator "[?!~*&%<>^|=,+]"
+syn match cOperator "[][]"
+syn match cOperator "[^:]\@1<=:[^:]\@="
+syn match cOperator "-[^>]"me=e-1
+syn match cOperator "/[^/*]"me=e-1
+hi! def link cOperator MemberAccess
 
 
 " Common ANSI-standard Names
@@ -78,9 +72,7 @@ hi def link cConstant   Boolean
 
 " Highlight all standard C keywords as Statement
 " This is very similar to what other IDEs and editors do
-if get(g:, 'cpp_simple_highlight', 1)
-    hi! def link cStorageClass Statement
-    hi! def link cStructure    Statement
-    hi! def link cTypedef      Statement
-    hi! def link cLabel        Statement
-endif
+hi! def link cStorageClass Statement
+hi! def link cStructure    Statement
+hi! def link cTypedef      Statement
+hi! def link cLabel        Statement
