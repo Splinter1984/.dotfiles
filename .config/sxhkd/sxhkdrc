@@ -12,7 +12,8 @@ super + Enter
 #
 # lockscreen
 alt + shift + x
-  ~/.config/scripts/lock.sh
+  env XSECURELOCK_PASSWORD_PROMPT=time_hex xsecurelock
+  #~/.config/scripts/lock.sh
 
 # bluetooth
 super + b
@@ -45,10 +46,6 @@ super + q
 # rofi emoji
 super + z
   rofi -show emoji -modi emoji -theme iconic
-
-# Reload Polybar
-super + shift + Escape
-	~/.config/polybar/launch.sh
 
 # take a screenshot
 super + Print
@@ -172,6 +169,13 @@ XF86AudioRaiseVolume
   ~/.config/scripts/volume.sh -inc
 XF86AudioMute
   ~/.config/scripts/volume.sh -mute
+
+shift + XF86AudioMute
+  ~/.config/scripts/rofi-input.sh --mute_source
+shift + XF86AudioLowerVolume
+  ~/.config/scripts/rofi-input.sh --volume_source_down
+shift + XF86AudioRaiseVolume
+  ~/.config/scripts/rofi-input.sh --volume_source_up
 
 # source dev contral
 super + XF86AudioMute

@@ -3,11 +3,15 @@
   follow = keyboard
   font = Hack Nerd Font Mono 11
   # geometry = "0x5-30+20
-  geometry = "0x10-8+34"
+# > previously known as 'geometry' was deprecated
+  width = 300
+  height = 100
+  offset = 5x5
+  origin = top-right # or top-left, or any other direction you prefer
+# < geometry
   indicate_hidden = yes
   shrink = true
-  transparency = 6
-  notification_height = 0
+  transparency = 10
   separator_height = 0
   padding = 15
   horizontal_padding = 25
@@ -34,21 +38,13 @@
   sticky_history = yes
   history_length = 20
   always_run_script = true
-  startup_notification = false
   browser = /usr/bin/firefox -new-tab
-  verbosity = mesg
   corner_radius = 5
   force_xinerama = false
   mouse_left_click = close_current
   mouse_middle_click = do_action
   mouse_right_click = close_all
   # dmenu = rofi -dmenu -theme ~/.config/rofi/colors.rasi -p " "
-
-[shortcuts]
-  close = ctrl+space
-  close_all = ctrl+shift+space
-  history = ctrl+grave
-  context = ctrl+shift+period
 
 [urgency_low]
   timeout = 2
@@ -57,13 +53,13 @@
   frame_color = "#404040"
 
 [urgency_normal]
-  timeout = 2
+  timeout = 10
   background = "#262626"
   foreground = "#d0d0d0"
   frame_color = "#fabd2f"
 
 [urgency_critical]
-  timeout = 10
+  timeout = 15
   background = "#262626"
   foreground = "#d0d0d0"
   frame_color = "#fb4934"

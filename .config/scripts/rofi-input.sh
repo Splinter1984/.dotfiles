@@ -15,6 +15,11 @@ volume_source_up() {
       pactl set-source-mute @DEFAULT_SOURCE@ toggle
     fi
     pactl set-source-volume @DEFAULT_SOURCE@ +2%
+    dunstify " Volume: " \
+          -u low \
+          -h int:value:$(pactl get-source-volume @DEFAULT_SOURCE@ | grep Volume | awk '{volume = $5;} END {print $5}') \
+          -h string:synchronous:volume \
+          -i microphone-sensitivity-high
 }
 
 volume_source_down() {
@@ -23,6 +28,11 @@ volume_source_down() {
       pactl set-source-mute @DEFAULT_SOURCE@ toggle
     fi
     pactl set-source-volume @DEFAULT_SOURCE@ -2%
+    dunstify " Volume: " \
+          -u low \
+          -h int:value:$(pactl get-source-volume @DEFAULT_SOURCE@ | grep Volume | awk '{volume = $5;} END {print $5}') \
+          -h string:synchronous:volume \
+          -i microphone-sensitivity-high
 }
 
 function get_is_muted() {
