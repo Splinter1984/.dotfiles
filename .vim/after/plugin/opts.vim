@@ -222,6 +222,8 @@ if exists("g:gutentags_enabled")
   # generate datebases in my cache directory, prevent gtags files polluting my project
   # g:gutentags_cache_dir = expand('~/.cache/tags')
   # resolve all sym links please!
+  g:gutentags_dont_load = 1
+  g:gutentags_background_update = 0
   g:gutentags_resolve_symlinks = 1
   # change focus to quickfix window after search (optional).
   g:gutentags_plus_switch = 1

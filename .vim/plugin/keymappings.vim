@@ -56,3 +56,7 @@ import autoload 'comment.vim'
 nnoremap <silent> <expr> gc comment.Toggle()
 xnoremap <silent> <expr> gc comment.Toggle()
 nnoremap <silent> <expr> gcc comment.Toggle() .. '_'
+
+# import autoload 'git.vim'
+# nnoremap <silent> <expr> bl git.Blame()
+# xnoremap <silent> <expr> bl git.Blame()

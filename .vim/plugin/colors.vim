@@ -275,6 +275,6 @@ autocmd VimEnter,WinEnter * call ColorCorrect()
 exe $"hi! TrailingWhitespace          {fg_comment}     {bg_none}     {fmt_none}"
 match TrailingWhitespace /\s\+\%#\@<!$/
 
-autocmd Syntax * syn match TODO   /\v\_.<TODO./hs=s+1  containedin=.*Comment
-autocmd Syntax * syn match FIXME  /\v\_.<FIXME./hs=s+1 containedin=.*Comment
-autocmd Syntax * syn match NOTE   /\v\_.<NOTE./hs=s+1  containedin=.*Comment
+autocmd Syntax * syn match TODO   /\v\_.<TODO/hs=s+1  containedin=.*Comment
+autocmd Syntax * syn match FIXME  /\v\_.<FIXME/hs=s+1 containedin=.*Comment
+autocmd Syntax * syn match NOTE   /\v\_.<NOTE/hs=s+1  containedin=.*Comment
