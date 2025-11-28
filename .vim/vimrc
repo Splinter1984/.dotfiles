@@ -182,41 +182,40 @@ endif
 # -----------------------------------------------------------------------------
 # Plugins
 # -----------------------------------------------------------------------------
-
-# Download plug.vim if it doesn't exist yet
-if empty(glob('~/.vim/autoload/plug.vim'))
-    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-                \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+#
+if &compatible
+  # `:set nocp` has many side effects. Therefore this should be done
+  # only when 'compatible' is set.
+  set nocompatible
 endif
 
-# Run PlugInstall if there are missing plugins
-autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)')) > 0
-            \| PlugInstall --sync | source $MYVIMRC
-            \| endif
-plug#begin("~/.local/share/vim-plug/")
+packadd minpac
 
-  Plug 'yegappan/lsp'
-  Plug 'girishji/vimcomplete'
-  Plug 'girishji/vimsuggest'
-  Plug 'girishji/ngram-complete.vim'
-  Plug 'airblade/vim-gitgutter'
-  Plug 'itspriddle/vim-shellcheck'
-  Plug 'machakann/vim-sandwich'
-  # Plug 'tpope/vim-surround'
-  # Plug 'ludovicchabant/vim-gutentags'
-  # Plug 'skywind3000/gutentags_plus'
-  Plug 'rhysd/conflict-marker.vim'
-  # Plug 'habamax/vim-rst'
-  Plug 'google/vim-maktaba'
-  Plug 'google/vim-coverage'
-  Plug 'google/vim-glaive'
-  Plug 'some00/vimgcov'
-  # Plug 'powerman/vim-plugin-AnsiEsc'
-  # Plug 'LaTeX-Box-Team/LaTeX-Box'
-  # Plug 'junkblocker/patchreview-vim'
-  # Plug 'vimwiki/vimwiki'
+call minpac#init()
 
-plug#end()
+call minpac#add('k-takata/minpac', {'type': 'opt'})
+call minpac#add('yegappan/lsp')
+
+call minpac#add('girishji/vimcomplete')
+call minpac#add('girishji/vimsuggest')
+call minpac#add('girishji/ngram-complete.vim')
+
+call minpac#add('airblade/vim-gitgutter')
+# call minpac#add('itspriddle/vim-shellcheck')
+call minpac#add('machakann/vim-sandwich')
+# call minpac#add('rhysd/conflict-marker.vim')
+call minpac#add('google/vim-maktaba')
+call minpac#add('google/vim-coverage')
+call minpac#add('google/vim-glaive')
+call minpac#add('some00/vimgcov')
+# call minpac#add('tpope/vim-surround')
+# call minpac#add('ludovicchabant/vim-gutentags')
+# call minpac#add('skywind3000/gutentags_plus')
+# call minpac#add('habamax/vim-rst')
+# call minpac#add('powerman/vim-plugin-AnsiEsc')
+# call minpac#add('LaTeX-Box-Team/LaTeX-Box')
+# call minpac#add('junkblocker/patchreview-vim')
+# call minpac#add('vimwiki/vimwiki')
 
 # --------------------------
 # Cmdline auto-completion
