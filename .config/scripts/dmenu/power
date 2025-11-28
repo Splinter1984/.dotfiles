@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+set -ux
+
+source "$(dirname $0)/colors"
+
+##################################################
+# configuration
+##################################################
+
+first_prompt="Power menu:"
+
+pwroff="Poweroff"
+lockscreen="Lockscreen"
+reboot="Reboot"
+
+opt1="\Uf0425 $pwroff\n""\Uf033e $lockscreen\n""\Uf0709 $reboot"
+second_prompt="Are you sure?"
+opt2="Yes\nNo"
+
+asw1=(Yes yes y ys)
+asw2=(No  no  n nn)
+
+shtd="systemctl poweroff"
+rebt="systemctl reboot"
+lock="${HOME}/.config/scripts/lock.sh"
+
+ask() {
+  result=$(echo -e "$1" | dmenu -i -p "$2" $COLORS $FONT)
+  [[ -n "$result" ]] && echo -e "$result"
+}
+
+##################################################
+# main
+##################################################
+
+answer=$(ask "$opt1" "" | grep -Po "\s.+" | tr -d '[:space:]')
+cmd=""
+
+case "$answer" in
+  "$pwroff")
+    cmd="$shtd"
+    ;;
+  "$reboot")
+    cmd="$rebt"
+    ;;
+  "$lockscreen")
+    cmd="$lock"
+    ;;
+esac
+
+if [[ -n "$cmd" ]]; then
+  ans=$(ask "$opt2" "$second_prompt" "($answer)")
+  res=$(echo -e "${asw1[@]}" | grep -o "$ans" | wc -w)
+  [[ "$res" -ne "0" ]] && $cmd
+fi
+
+exit 0

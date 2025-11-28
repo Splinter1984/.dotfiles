@@ -1,27 +1,12 @@
-#
-# wm independent hotkeys
-#
-
-# terminal emulator
-super + Enter
-  alacritty
-
 # program launcher
-#super + @space
-#	dmenu_run
-#
+super + @space
+  ~/.config/scripts/dmenu/main
+
 # lockscreen
 alt + shift + x
   env XSECURELOCK_PASSWORD_PROMPT=time_hex xsecurelock
-  #~/.config/scripts/lock.sh
 
 # bluetooth
-super + b
-  ~/.config/scripts/rofi-bluetooth
-
-# calendar
-super + alt + c
-  naivecalendar
 
 # make sxhkd reload its configuration files:
 super + Escape
@@ -31,21 +16,8 @@ super + Escape
 super + ?
   sxhkd-help
 
-# Rofi
-super + space
-	rofi -show drun -theme iconic
-
-# rofi-power menu
 super + q
-  rofi -show menu -modi menu:rofi-power-menu -theme iconic
-
-# rofi-window menu
-#super + alt + \
-#  rofi -show window -theme iconic
-
-# rofi emoji
-super + z
-  rofi -show emoji -modi emoji -theme iconic
+  ~/.config/scripts/dmenu/power
 
 # take a screenshot
 super + Print
@@ -171,19 +143,12 @@ XF86AudioMute
   ~/.config/scripts/volume.sh -mute
 
 shift + XF86AudioMute
-  ~/.config/scripts/rofi-input.sh --mute_source
+  ~/.config/scripts/inout_source --mute_source
 shift + XF86AudioLowerVolume
-  ~/.config/scripts/rofi-input.sh --volume_source_down
+  ~/.config/scripts/inout_source --volume_source_down
 shift + XF86AudioRaiseVolume
-  ~/.config/scripts/rofi-input.sh --volume_source_up
+  ~/.config/scripts/inout_source --volume_source_up
 
-# source dev contral
-super + XF86AudioMute
-  ~/.config/scripts/rofi-input.sh --mute_source
-super + XF86AudioLowerVolume
-  ~/.config/scripts/rofi-input.sh --volume_source_up
-super + XF86AudioRaiseVolume
-  ~/.config/scripts/rofi-input.sh --volume_source_down
 #	pamixer -t
 XF86AudioPlay
   playerctl play-pause

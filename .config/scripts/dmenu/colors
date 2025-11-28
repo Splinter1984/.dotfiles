@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+FONT="-fn HackNerdFont-11"
+COLORS="-nb #262626 -nf #d0d0d0 -sb #f19618 -sf #424242"
+

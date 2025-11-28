@@ -1,0 +1,214 @@
+#!/usr/bin/env bash
+set -ux
+
+source "$(dirname $0)/colors"
+
+##################################################
+# configuration
+##################################################
+
+warn_ico="\Uf071"
+nobl_ico="\Uf00b2"
+ysbl_ico="\Uf294"
+
+# case: show
+powr="Powered"
+scan="Discovering"
+pair="Pairable"
+disc="Discoverable"
+
+# case: info
+cond="Connected"
+pard="Paired"
+trsd="Trusted"
+
+asw1=(Yes yes y ys)
+asw2=(No  no  n nn)
+
+opt0_power_on="Device\nPower\nDiscover\nPair\n"
+opt0_power_off="Power"
+prompt0="Bluetooth"
+prompt1="Device"
+
+ask() {
+  result=$(echo -e "$1" | dmenu -i -p "$2" $COLORS $FONT)
+  [[ -n "$result" ]] && echo -e "$result"
+}
+
+##################################################
+# usefull methods
+##################################################
+
+get_devlist() {
+  uuids=($(bluetoothctl devices | grep -Po "[0-9A-F]{2}:[0-9A-F]{2}:[0-9A-F]{2}:[0-9A-F]{2}:[0-9A-F]{2}:[0-9A-F]{2}"))
+  [[ "${#uuids[@]}" -ne "0" ]] && echo -e ${uuids[*]}
+}
+
+get_devname() {
+  name=$(bluetoothctl devices | grep -P "$1" | grep -Po ":..\s.+" | grep -Po "\s.+")
+  [[ -n "$name" ]] && echo -e $name
+}
+
+is_enabled() {
+  result=$(bluetoothctl show | grep -Po "$1: yes" | wc -w)
+  [[ "$result" -ne "0" ]] && echo -e $result
+}
+
+is_info() {
+  result=$(bluetoothctl info "$1" | grep -Po "$2: yes" | wc -w)
+  [[ "$result" -ne "0" ]] && echo -e $result
+}
+
+powr_toogle() {
+  if is_enabled $powr; then
+    bluetoothctl power off
+    dunstify "$(echo -e $nobl_ico) bluetooth device power off" \
+      -u low \
+      -h string:synchronous:bluetooth_powr
+  else
+    count=3
+    while [[ "$count" -ne "0" ]]; do
+      blocked=$(rfkill list bluetooth | grep -Po 'blocked: yes'| wc -w)
+      if [[ "$blocked" -ne "0" ]]; then
+        rfkill unblock bluetooth && sleep 1 && count=$(( count - 1 ))
+      else
+        break
+      fi
+    done
+    if [[ "$count" -eq "0" ]]; then
+      dunstify "$(echo -e $warn_ico) unable to unblock bluetooth device" \
+        -u normal
+    else
+      bluetoothctl power on
+      dunstify "$(echo -e $ysbl_ico) bluetooth device power on" \
+        -u low \
+        -h string:synchronous:bluetooth_powr
+    fi
+  fi
+}
+
+pair_toogle() {
+  if is_enabled $pair; then
+    ret=$(bluetoothctl pairable off | grep -Po 'succeeded' | wc -w)
+    [[ "$ret" -ne "0" ]] && \
+      dunstify "$(echo -e $ysbl_ico) device pairable off" \
+        -u low \
+        -h string:synchronous:bluetooth_pair
+  else
+    ret=$(bluetoothctl pairable on | grep -Po 'succeeded' | wc -w)
+    [[ "$ret" -ne "0" ]] && \
+      dunstify "$(echo -e $ysbl_ico) device pairable on" \
+        -u low \
+        -h string:synchronous:bluetooth_pair
+  fi
+}
+
+disc_toogle() {
+  if is_enabled $disc; then
+    ret=$(bluetoothctl discoverable off | grep -Po 'succeeded' | wc -w)
+    [[ "$ret" -ne "0" ]] && \
+      dunstify "$(echo -e $ysbl_ico) device discoverable off" \
+        -u low \
+        -h string:synchronous:bluetooth_disc
+  else
+    ret=$(bluetoothctl discoverable on | grep -Po 'succeeded' | wc -w)
+    [[ "$ret" -ne "0" ]] && \
+      dunstify "$(echo -e $ysbl_ico) device discoverable on" \
+        -u low \
+        -h string:synchronous:bluetooth_disc
+  fi
+}
+
+disc_toogle() {
+  if is_enabled $disc; then
+    ret=$(bluetoothctl discoverable off | grep -Po 'succeeded' | wc -w)
+    [[ "$ret" -ne "0" ]] && \
+      dunstify "$(echo -e $ysbl_ico) device discoverable off" \
+        -u low \
+        -h string:synchronous:bluetooth_disc
+  else
+    ret=$(bluetoothctl discoverable on | grep -Po 'succeeded' | wc -w)
+    [[ "$ret" -ne "0" ]] && \
+      dunstify "$(echo -e $ysbl_ico) device discoverable on" \
+        -u low \
+        -h string:synchronous:bluetooth_disc
+  fi
+}
+
+trsd_toogle() {
+  if is_info $1 $trsd; then
+    ret=$(bluetoothctl untrust $1 | tr '[:upper:]' '[:lower:]' | grep -Po 'succeeded' | wc -w)
+    [[ "$ret" -ne "0" ]] && \
+      dunstify "$(echo -e $ysbl_ico) ($(get_devname $1)) untrusted" \
+        -u low \
+        -h string:synchronous:bluetooth_trsd
+  else
+    ret=$(bluetoothctl trust $1 | tr '[:upper:]' '[:lower:]' | grep -Po 'succeeded' | wc -w)
+    [[ "$ret" -ne "0" ]] && \
+      dunstify "$(echo -e $ysbl_ico) ($(get_devname $1)) trusted" \
+        -u low \
+        -h string:synchronous:bluetooth_trsd
+  fi
+}
+
+cond_toogle() {
+  if is_info $1 $cond; then
+    ret=$(bluetoothctl disconnect $1 | tr '[:upper:]' '[:lower:]' | grep -Po 'successful' | wc -w)
+    [[ "$ret" -ne "0" ]] && \
+      dunstify "$(echo -e $ysbl_ico) disconnected" \
+        "$1" \
+        -u low \
+        -h string:synchronous:bluetooth_cond
+  else
+    ret=$(bluetoothctl connect $1 | tr '[:upper:]' '[:lower:]' | grep -Po 'successful' | wc -w)
+    [[ "$ret" -ne "0" ]] && \
+      dunstify "$(echo -e $ysbl_ico) connected" \
+        "$1" \
+        -u low \
+        -h string:synchronous:bluetooth_cond
+  fi
+}
+
+pard_toogle() {
+  if is_info $1 $pard; then
+    ret=$(bluetoothctl remove $1 | tr '[:upper:]' '[:lower:]' | grep -Po 'successful' | wc -w)
+    [[ "$ret" -ne "0" ]] && \
+      dunstify "$(echo -e $ysbl_ico) removed" \
+        $(get_devname $1) \
+        -u low \
+        -h string:synchronous:bluetooth_pard
+  else
+    ret=$(bluetoothctl pair $1 | tr '[:upper:]' '[:lower:]' | grep -Po 'successful' | wc -w)
+    [[ "$ret" -ne "0" ]] && \
+      dunstify "$(echo -e $ysbl_ico) paired" \
+        $(get_devname $1) \
+        -u low \
+        -h string:synchronous:bluetooth_pard
+  fi
+}
+
+##################################################
+# main
+##################################################
+
+# a1=""
+# if is_enabled $powr; then
+#   a1=$(ask "$opt0_power_off" "$prompt0" | tr -d '[:space:]')
+# else
+#   a1=$(ask "$opt0_power_on" "$prompt0"  | tr -d '[:space:]')
+# fi
+
+# case "$a1" in
+#   "Device")
+#     ;;
+#   "Power")
+#     ;;
+#   "Discover")
+#     ;;
+#   "Pair")
+#     ;;
+# esac
+
+
+
+"$@" # debug

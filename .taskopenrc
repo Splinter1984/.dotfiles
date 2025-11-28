@@ -1,0 +1,28 @@
+[General]
+EDITOR=vim
+path_ext=/usr/share/taskopen/scripts
+taskbin = task
+no_annotation_hook = "addnote $UUID"
+task_attributes = "priority,project,tags,description"
+--sort = "urgency-,label+,annot+"
+--active-tasks = "status.is:pending"
+--debug = 1
+
+[Actions]
+files.target=annotations
+files.labelregex=".*"
+files.regex="^[\\.\\/~]+.*\\.(.*)"
+files.command="open $FILE"
+files.modes="batch,any,normal"
+notes.ext=.md
+notes.target=annotations
+notes.labelregex=".*"
+notes.regex="^Notes(\\..*)?"
+notes.command="""editnote ~/Notes/tasknotes/$UUID$LAST_MATCH "$TASK_DESCRIPTION" $UUID"""
+notes.modes="batch,any,normal"
+url.target=annotations
+url.labelregex=".*"
+url.regex="((?:www|http).*)"
+url.command="open $LAST_MATCH"
+#url.inlinecommand = "date -d \"${ENTRY:0:8} ${ENTRY:9:2}:${ENTRY:11:2}:${ENTRY:13:2} UTC+2\""
+url.modes="batch,any,normal"

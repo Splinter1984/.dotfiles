@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+source $(dirname $0)/colors
+
+dmenu_run -i $COLORS $FONT

@@ -1,0 +1,68 @@
+#!/bin/bash
+set -ux
+
+volume_source_up() {
+    MUTE=$(get_is_muted)
+    if [ "$MUTE" = "yes" ]; then
+      pactl set-source-mute @DEFAULT_SOURCE@ toggle
+    fi
+    pactl set-source-volume @DEFAULT_SOURCE@ +2%
+    dunstify " Volume: " \
+          -u low \
+          -h int:value:$(pactl get-source-volume @DEFAULT_SOURCE@ | grep Volume | awk '{volume = $5;} END {print $5}') \
+          -h string:synchronous:volume \
+          -i microphone-sensitivity-high
+}
+
+volume_source_down() {
+    MUTE=$(get_is_muted)
+    if [ "$MUTE" = "yes" ]; then
+      pactl set-source-mute @DEFAULT_SOURCE@ toggle
+    fi
+    pactl set-source-volume @DEFAULT_SOURCE@ -2%
+    dunstify " Volume: " \
+          -u low \
+          -h int:value:$(pactl get-source-volume @DEFAULT_SOURCE@ | grep Volume | awk '{volume = $5;} END {print $5}') \
+          -h string:synchronous:volume \
+          -i microphone-sensitivity-high
+}
+
+function get_is_muted() {
+  pactl get-source-mute @DEFAULT_SOURCE@ | awk '{print $2}'
+}
+
+mute_source() {
+    MUTE=$(get_is_muted)
+    if [ "$MUTE" = "yes" ]; then
+        pactl set-source-mute @DEFAULT_SOURCE@ toggle
+        dunstify " Unmute" \
+          -u low \
+          -h string:synchronous:volume \
+          -i microphone-sensitivity-high
+    else
+        pactl set-source-mute @DEFAULT_SOURCE@ toggle
+        dunstify " Mute" \
+          -u low \
+          -h string:synchronous:volume \
+          -i microphone-sensitivity-muted
+    fi
+}
+
+get_default_source() {
+  pactl get-default-source
+}
+
+case "$1" in
+  --mute_source)
+    mute_source
+  ;;
+  --volume_source_up)
+    volume_source_up
+  ;;
+  --volume_source_down)
+    volume_source_down
+  ;;
+  *)
+    echo "Wrong argument"
+  ;;
+esac
