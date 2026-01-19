@@ -165,9 +165,9 @@ endif
   g:gitgutter_preview_win_floating = 1
   g:gitgutter_sign_priority = 1
 
-  if executable("rg")
-    g:gitgutter_grep = 'rg'
-  endif
+  # if executable("rg")
+  #   g:gitgutter_grep = '/usr/bin/rg'
+  # endif
 # }}}
 
 # habamax-rst opts: {{{
@@ -208,6 +208,7 @@ call minpac#add('google/vim-maktaba')
 call minpac#add('google/vim-coverage')
 call minpac#add('google/vim-glaive')
 call minpac#add('some00/vimgcov')
+call minpac#add('junkblocker/Modeliner')
 # call minpac#add('tpope/vim-surround')
 # call minpac#add('ludovicchabant/vim-gutentags')
 # call minpac#add('skywind3000/gutentags_plus')
@@ -275,3 +276,5 @@ call minpac#add('some00/vimgcov')
 # inoremap <expr> <s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
 
 #packadd taghighlight
+
+# vim: set et fenc=utf-8 ff=unix sts=2 sw=2 ts=2 :

@@ -162,10 +162,20 @@ def ColorCorrect()
   exe $"hi! GitGutterAddIntraLine     {fg_addfg}       {bg_none}     {fmt_none}"
   exe $"hi! GitGutterDeleteIntraLine  {fg_delfg}       {bg_none}     {fmt_none}"
 
-  exe $"hi! diffAdded                 {fg_addfg}       {bg_none}     {fmt_revr}"
-  exe $"hi! diffChangeed              {fg_changefg}    {bg_none}     {fmt_revr}"
-  exe $"hi! diffRemoved               {fg_delfg}       {bg_none}     {fmt_revr}"
+## }}}
+## Git: {{{
+  exe $"hi! diffAdded                 {fg_addfg}       {bg_none}     {fmt_none}"
+  exe $"hi! diffChangeed              {fg_changefg}    {bg_none}     {fmt_none}"
+  exe $"hi! diffRemoved               {fg_delfg}       {bg_none}     {fmt_none}"
   exe $"hi! diffText                  {fg_none}        {bg_none}     {fmt_none}"
+
+  exe $"hi! diffFile                  {fg_none}        {bg_none}     {fmt_bold}"
+  exe $"hi! diffIndexLine             {fg_none}        {bg_none}     {fmt_bold}"
+  exe $"hi! diffOldFile               {fg_none}        {bg_none}     {fmt_bold}"
+  exe $"hi! diffNewFile               {fg_none}        {bg_none}     {fmt_bold}"
+
+  exe $"hi! diffLine                  {fg_blue}        {bg_none}     {fmt_none}"
+  exe $"hi! diffSubname               {fg_none}        {bg_none}     {fmt_none}"
 
 ## }}}
 ## VimSuggest: {{{
