@@ -1,7 +1,7 @@
 " Vim syntax file
-" Language:	gcov (gcc coverage testing output)
-" Maintainer:	Saikat Guha <saikat@cs.cornell.edu>
-" Last Change:	2008 Jan 09
+" Language:     gcov (gcc coverage testing output)
+" Maintainer:   Saikat Guha <saikat@cs.cornell.edu>
+" Last Change:  2008 Jan 09
 
 " Quit when a (custom) syntax file was already loaded
 if exists("b:current_syntax")
@@ -40,13 +40,13 @@ syn match  gcovfunctionNotExecuted    "^function\s\+\w*\s\+called\s\+0.*"
 
 " Define the default highlighting.
 " Only used when an item doesn't have highlighting yet
-hi def link gcovTag        	        Ignore
+hi def link gcovTag                     Ignore
 hi def link gcovTagNameColon            gcovTag
-hi def link gcovTagName    	        Statement
-hi def link gcovTagValue   	        Identifier
-hi def link gcovNotExecuted	        Constant
+hi def link gcovTagName                 Statement
+hi def link gcovTagValue                Identifier
+hi def link gcovNotExecuted             Constant
 hi def link gcovExecuted                Type
-hi def link gcovNoCode		        Ignore
+hi def link gcovNoCode                  Ignore
 
 hi def link gcovSpecialExecuted         Comment
 hi def link gcovSpecialNotExecuted      Special

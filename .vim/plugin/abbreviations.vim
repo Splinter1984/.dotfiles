@@ -1,7 +1,7 @@
-vim9script
+iab  --* ----------------------------------------------------------------------
+iab  ==* ======================================================================
 
-inorea todo: TODO:
 inorea fixme: FIXME:
-inorea xxx: XXX:
+inorea todo: TODO:
 inorea note: NOTE:
-inorea task: TASK:
+inorea xxx: XXX:

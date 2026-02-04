@@ -19,10 +19,6 @@ nnoremap <silent> [B :bfirst<CR>
 nnoremap <silent> ]B :blast<CR>
 
 # Tab navigation
-nnoremap <silent> [t :tabprevious<CR>
-nnoremap <silent> ]t :tabnext<CR>
-nnoremap <silent> [T :tabfirst<CR>
-nnoremap <silent> ]T :tablast<CR>
 
 # quickfix list
 nnoremap <silent> [c :cprevious<CR>

@@ -1,8 +1,3 @@
-" ==============================================================================
-" Maintainer:      Splinter1984 <https://github.com/Splinter1984>
-" Last Change:     Apr 7, 2025
-" ==============================================================================
-
 if !has('vim9script') ||  v:version < 900
   " Needs Vim version 9.0 and above
   finish
@@ -51,7 +46,7 @@ set noshowcmd  # XXX: Stop echoing keymapped typed keys in the bottom row
 set clipboard=unnamedplus # Always use the system clipboard
 set mouse= # XXX: Disable mouse (set by defaults.vim). Needed by macos terminal app.
 set number # line numbering
-# set relativenumber
+set relativenumber
 set hls # highlight search
 set lbr # line break
 set hidden # buffer becomes hidden (not unloaded) when it is abandoned (ex. help buffer)
@@ -103,37 +98,6 @@ set lazyredraw
 # set maximum amount of memory (in Kbyte) to use for pattern matching
 set mmp=2000000
 
-# {{{
-#   set termguicolors
-#   set background=dark
-#   colorscheme gruvbox8
-# }}}
-
-# colorscheme hybrid #tangoX, sonoma, seoul256, hybrid_reverse/material, happy_hacking, dzo, clearance
-# colorsbox-stbright/stnight, deep-space, deus, herald, minimalist, seti, solorized, thegoodluck, tuttycolori,
-# visualstudio, wildcharm
-
-# XXX: job_start does not pass --exclude={foo, bar} correctly to shell (because
-# job_start does not spawn a shell, it executes command directly). single quotes
-# also don't work, need double quotes. but all of these work for :grep
-# set grepprg=grep\ --color=never\ -RESIHin\ --exclude="*.git*"\ --exclude="*.swp"\ --exclude="*.zwc"\ --exclude-dir=plugged
-# dot directories like .git are automatically excluded
-# '$*' is a placeholder to replace typed pattern
-#set grepprg=grep\ --color=never\ -REIHin\ $*
-#set grepprg=rg\ $*
-# make grep behave like vimgrep
-# set grepprg=internal
-if executable("rg")
-  set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case\ --follow
-  set grepformat=%f:%l:%c:%m,%f:%l:%m
-else
-  set grepprg=grep\ --color=never\ -REIHin\ $*
-endif
-
-# enable folding at headers in markdown
-g:markdown_folding = 1
-g:markdown_fenced_languages = ['vim', 'diff', 'gitcommit', 'c', 'python', 'bash=sh']
-
 syntax on # turn on syntax highlighting
 
 # This loads the "matchit" plugin; It makes the % command more powerful, but
@@ -152,33 +116,6 @@ if v:version >= 901 && !getcompletion('comment', 'packadd')->empty()
     packadd comment
 endif
 
-# FIXME: unable to specify `gitgutter` variables in `opts.vim`.
-# GitGutter opts: {{{
-  g:gitgutter_set_sign_backgrounds = 1
-  g:gitgutter_sign_added = '┃'
-  g:gitgutter_sign_modified = '┃'
-  g:gitgutter_sign_removed = '┃'
-  g:gitgutter_sign_removed_first_line = '‾'
-  #g:gitgutter_sign_removed_above_and_below = '▊'
-  g:gitgutter_sign_modified_removed = '~'
-  g:gitgutter_use_location_list = 1
-  g:gitgutter_preview_win_floating = 1
-  g:gitgutter_sign_priority = 1
-
-  # if executable("rg")
-  #   g:gitgutter_grep = '/usr/bin/rg'
-  # endif
-# }}}
-
-# habamax-rst opts: {{{
-  # g:rst_syntax_code_list = {
-  #   'vim': ['vim'], 'sh': ['sh'],
-  #   'python': ['python'], 'c': ['c'],
-  #   'cpp': ['cpp'], 'xml': ['xml'],
-  #   'yaml': ['yaml']
-  # }
-# }}}
-
 # -----------------------------------------------------------------------------
 # Plugins
 # -----------------------------------------------------------------------------
@@ -194,87 +131,14 @@ packadd minpac
 call minpac#init()
 
 call minpac#add('k-takata/minpac', {'type': 'opt'})
+
 call minpac#add('yegappan/lsp')
-
-call minpac#add('girishji/vimcomplete')
-call minpac#add('girishji/vimsuggest')
-call minpac#add('girishji/ngram-complete.vim')
-
-call minpac#add('airblade/vim-gitgutter')
-# call minpac#add('itspriddle/vim-shellcheck')
 call minpac#add('machakann/vim-sandwich')
-# call minpac#add('rhysd/conflict-marker.vim')
-call minpac#add('google/vim-maktaba')
-call minpac#add('google/vim-coverage')
-call minpac#add('google/vim-glaive')
-call minpac#add('some00/vimgcov')
-call minpac#add('junkblocker/Modeliner')
-# call minpac#add('tpope/vim-surround')
-# call minpac#add('ludovicchabant/vim-gutentags')
-# call minpac#add('skywind3000/gutentags_plus')
-# call minpac#add('habamax/vim-rst')
-# call minpac#add('powerman/vim-plugin-AnsiEsc')
-# call minpac#add('LaTeX-Box-Team/LaTeX-Box')
-# call minpac#add('junkblocker/patchreview-vim')
-# call minpac#add('vimwiki/vimwiki')
 
-# --------------------------
-# Cmdline auto-completion
-# --------------------------
-# set wim=noselect:lastused,full wop=pum,tagfile wcm=<C-@> wmnu
-# autocmd CmdlineChanged : timer_start(0, function(CmdComplete, [getcmdline()]))
-# def CmdComplete(cur_cmdline: string, timer: number)
-#     var [cmdline, curpos] = [getcmdline(), getcmdpos()]
-#     if cur_cmdline ==# cmdline # Avoid completing each char of keymaps and pasted text
-#       && !pumvisible() && curpos == cmdline->len() + 1
-#       && cmdline =~ '\%(\w\|[*/:.-]\)$' && cmdline !~ '^\d\+$'  # Reduce noise
-#         feedkeys("\<C-@>", "ti")
-#         set eventignore+=CmdlineChanged  # Suppress redundant completion attempts
-#         timer_start(0, (_) => {
-#             # using 'g' in substitute() fixes problem where ^@ gets inserted
-#             # when typing really fast
-#             getcmdline()->substitute('\%x00', '', 'g')->setcmdline()  # Vim inserts <C-@> when no completion items exist
-#             set eventignore-=CmdlineChanged
-#         })
-#     endif
-# enddef
-# autocmd CmdlineEnter : set bo+=error
-# autocmd CmdlineLeave : set bo-=error
-# cnoremap <Up> <End><C-U><Up>
-# cnoremap <Down> <End><C-U><Down>
+# coverage plugins
+# ----------------------------------------------------------------------
 
-# nnoremap <leader><bs> :b <c-@>
-
-# ---------------------------
-# Insert Mode Auto-completion
-# ---------------------------
-# set cot=menuone,noselect,popup inf
-# autocmd TextChangedI * InsComplete()
-# autocmd TextChangedP * InsComplete(true)
-# var skip_next_complete = false
-# var prevline: string
-# def InsComplete(pumvisible = false)
-#     var curline = getline('.')
-#     if prevline !=# curline
-#         prevline = curline
-#         if !pumvisible
-#             if !skip_next_complete && curline->strpart(0, col('.') - 1) =~ '\S\{2}$'
-#                 feedkeys("\<c-n>", "ni")
-#             endif
-#         elseif complete_info(['selected']).selected == -1
-#             feedkeys("\<c-e>\<c-n>", "ni")
-#         endif
-#     endif
-#     skip_next_complete = false
-# enddef
-# def SkipNextComplete(): string
-#     skip_next_complete = true
-#     return "\<c-e>"
-# enddef
-# inoremap <silent> <c-e> <c-r>=<SID>SkipNextComplete()<cr>
-# inoremap <expr> <tab> pumvisible() ? "\<c-n>" : "\<tab>"
-# inoremap <expr> <s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
-
-#packadd taghighlight
-
-# vim: set et fenc=utf-8 ff=unix sts=2 sw=2 ts=2 :
+# call minpac#add('google/vim-maktaba')
+# call minpac#add('google/vim-coverage')
+# call minpac#add('google/vim-glaive')
+# call minpac#add('some00/vimgcov')
