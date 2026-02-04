@@ -10,10 +10,6 @@
 [colors.primary]
 background = '#121212'
 foreground = '#d0d0d0'
-# background = '#191919'
-# foreground = '#cccccc'
-# background = '#1c1c1c'
-# foreground = '#d0d0d0'
 
 [colors.cursor]
 text = '#1d1f21'
