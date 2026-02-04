@@ -2,3 +2,4 @@ pack/dist/*
 pack/*
 .netrwhist
 .vimrc.un~
+*.old
