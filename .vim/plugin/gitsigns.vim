@@ -64,30 +64,33 @@ function! GitSigns()
         let l:lnum = l:start - 1
       endif
       let l:removals = []
-    elseif l:line =~ '^-' " track removed lines
-      call add(l:removals, 1)
-    elseif l:line =~ '^+'
-      let l:lnum += 1
-      if !empty(l:removals)
-        " Consider this a change, since a - was followed by a +
-        execute 'sign place ' . l:id . ' line=' . l:lnum . ' name=GitChanged buffer=' . bufnr('%')
-        let l:id += 1
-        call remove(l:removals, 0)
-      else
-        execute 'sign place ' . l:id . ' line=' . l:lnum . ' name=GitAdded buffer=' . bufnr('%')
-        let l:id += 1
-      endif
-    elseif l:line =~ '^ '
-      " Add removed signs on next available real line
-      for _ in l:removals
+    " Prevent from interpret everything above '^@@' as hunk
+    elseif exists('l:m')
+      if l:line =~ '^-' " track removed lines
+        call add(l:removals, 1)
+      elseif l:line =~ '^+'
         let l:lnum += 1
-        execute 'sign place ' . l:id . ' line=' . l:lnum . ' name=GitRemoved buffer=' . bufnr('%')
-        let l:id += 1
-      endfor
-      if l:removals->len() == 0
-        let l:lnum += 1
+        if !empty(l:removals)
+          " Consider this a change, since a - was followed by a +
+          execute 'sign place ' . l:id . ' line=' . l:lnum . ' name=GitChanged buffer=' . bufnr('%')
+          let l:id += 1
+          call remove(l:removals, 0)
+        else
+          execute 'sign place ' . l:id . ' line=' . l:lnum . ' name=GitAdded buffer=' . bufnr('%')
+          let l:id += 1
+        endif
+      elseif l:line =~ '^ '
+        " Add removed signs on next available real line
+        for _ in l:removals
+          let l:lnum += 1
+          execute 'sign place ' . l:id . ' line=' . l:lnum . ' name=GitRemoved buffer=' . bufnr('%')
+          let l:id += 1
+        endfor
+        if l:removals->len() == 0
+          let l:lnum += 1
+        endif
+        let l:removals = []
       endif
-      let l:removals = []
     endif
   endfor
 
@@ -136,7 +139,6 @@ function! NextGitHunk()
   for l:group in l:hunks
     if l:group[0] > l:current
       execute l:group[0]
-      echo l:group
       return
     endif
   endfor
@@ -149,7 +151,6 @@ function! PrevGitHunk()
   for l:group in reverse(l:hunks)
     if l:group[0] < l:current
       execute l:group[0]
-      echo l:group
       return
     endif
   endfor

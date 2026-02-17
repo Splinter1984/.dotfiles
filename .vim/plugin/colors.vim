@@ -22,6 +22,14 @@ function! ApplyColors(timer) abort
   hi Special      ctermfg=2
   hi SpecialChar  ctermfg=5
 
+  hi Added          ctermfg=2    ctermbg=none
+  hi Changed        ctermfg=5    ctermbg=none
+  hi Removed        ctermfg=1    ctermbg=none
+
+  hi! def link DiffAdd      Added
+  hi! def link DiffChange   Changed
+  hi! def link DiffDelete   Removed
+
   call SaneColors()
 endfunction
 
@@ -36,14 +44,6 @@ function! SaneColors() abort
   hi CursorLine     ctermfg=none ctermbg=0    cterm=none
   hi CursorLineNr   ctermfg=3    ctermbg=0    cterm=none
   hi CursorLineSign ctermfg=none ctermbg=0    cterm=none
-
-  hi Added          ctermfg=2    ctermbg=none
-  hi Changed        ctermfg=5    ctermbg=none
-  hi Removed        ctermfg=1    ctermbg=none
-
-  hi! def link DiffAdd      Added
-  hi! def link DiffChange   Changed
-  hi! def link DiffDelete   Removed
 
   hi VertSplit      cterm=none   ctermbg=none cterm=none
 

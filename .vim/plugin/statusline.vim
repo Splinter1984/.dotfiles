@@ -6,7 +6,7 @@ def Gitbranch(): string
 enddef
 
 def Gitnumstat(): string
-  var m: list<string> = matchlist(system($"git diff --numstat {eval('@%')}"), '\(\d\+\)\s\+\(\d\+\)')
+  var m: list<string> = matchlist(system($"git diff --no-color --numstat {eval('@%')} 2> /dev/null"), '\(\d\+\)\s\+\(\d\+\)')
   return (!empty(m) ? ((m[1] != '0' ? $" %#DiffAdd#+{m[1]}%*" : "") .. (m[2] != '0' ? $" %#DiffDelete#-{m[2]}%*" : "")) : "")
 enddef
 

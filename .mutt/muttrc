@@ -1,0 +1,52 @@
+# Colors
+# ======================================================================
+
+color normal      default       default
+color hdrdefault  green         default
+color quoted      green         default
+color quoted1     yellow        default
+color quoted2     red           default
+color signature   cyan          default
+color indicator   black         green
+color error       red           default
+color status      white         default
+color tree        white         default
+color tilde       blue          default
+color attachment  yellow        default
+color markers     red           default
+color message     default       default
+color search      white         magenta
+color bold        yellow        default
+
+mono bold         bold
+mono underline    underline
+mono indicator    reverse
+
+color index       black         white       "~N !~T !~F !~p !~P"
+color index       red           default     "~D(!~p|~p)"         # deleted
+color index       yellow        default     "~T"                 # tagged messages
+
+# Configuration
+# ======================================================================
+
+source "~/.mutt/.account/init"
+
+set mbox_type=Maildir
+set folder=~/.mail/
+auto_view text/html
+set pgp_use_gpg_agent
+set pgp_timeout = 1800
+set editor = vim
+# set copy = no
+set crypt_autosign
+set crypt_replysign
+set crypt_replysignencrypted
+# set check_new
+# set mh_purge
+# unset confirmappend
+# unset confirmcreate
+set save_address
+set save_name
+# set mark_old
+set smart_wrap
+# set edit_hdrs
