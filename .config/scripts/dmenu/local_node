@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+set -ux
+
+source "$(dirname $0)/colors"
+##################################################
+# configuration
+##################################################
+
+first_prompt="Node:"
+
+get_nodename() {
+  name=$(echo -e "$1" | perl -ne 'my $res = `xargs xprop -id $_`; $res =~ /_NET_WM_NAME\(UTF8_STRING\)\s=\s"(.+)"\nWM_NAME\(STRING\)\s=\s"(.+)"/m; print "$1 ($2)\n"')
+  [[ -n "$name" ]] && echo -e $name
+}
+
+get_nodelist() {
+  nodes=($(bspc query -N -n .local.window))
+  [[ "${#nodes[@]}" -ne "0" ]] && echo -e ${nodes[*]}
+}
+
+ask() {
+  result=$(echo -e "$1" | dmenu -l 5 -i -p "$2" $CONF)
+  [[ -n "$result" ]] && echo -e "$result"
+}
+
+node_uuid=($(get_nodelist))
+node_nams=()
+node_prompt=""
+for i in "${!node_uuid[@]}"; do
+  node_prompt+="$i:$(get_nodename ${node_uuid[$i]})\n"
+  node_nams+=("$i:$(get_nodename ${node_uuid[$i]})")
+done
+node_index=$(ask "$node_prompt" "$first_prompt" | tr -d '[:space:]' | perl -ne '$_ =~ /(\d+):.+/; print $1')
+bspc node -f "${node_uuid[$node_index]}"

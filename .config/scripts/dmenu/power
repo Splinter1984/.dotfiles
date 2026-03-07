@@ -13,7 +13,7 @@ pwroff="Poweroff"
 lockscreen="Lockscreen"
 reboot="Reboot"
 
-opt1="\Uf0425 $pwroff\n""\Uf033e $lockscreen\n""\Uf0709 $reboot"
+opt1="\Uf033e $lockscreen\n""\Uf0425 $pwroff\n""\Uf0709 $reboot"
 second_prompt="Are you sure?"
 opt2="Yes\nNo"
 
@@ -25,7 +25,7 @@ rebt="systemctl reboot"
 lock="${HOME}/.config/scripts/lock.sh"
 
 ask() {
-  result=$(echo -e "$1" | dmenu -i -p "$2" $COLORS $FONT)
+  result=$(echo -e "$1" | dmenu -i -p "$2" $CONF)
   [[ -n "$result" ]] && echo -e "$result"
 }
 

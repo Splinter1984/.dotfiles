@@ -4,7 +4,7 @@
   font = Hack Nerd Font Mono 11
   width = 300
   height = 100
-  offset = -1x7
+  offset = 10x25
   origin = top-right # or top-left, or any other direction you prefer
   indicate_hidden = yes
   shrink = true
@@ -30,7 +30,7 @@
   history_length = 20
   always_run_script = true
   browser = /usr/bin/firefox -new-tab
-  corner_radius = 1
+  corner_radius = 8
   force_xinerama = false
   mouse_left_click = close_current
   mouse_middle_click = do_action

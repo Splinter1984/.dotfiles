@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
 
-FONT="-fn HackNerdFont-11"
-COLORS="-nb #262626 -nf #d0d0d0 -sb #f19618 -sf #424242"
+#_fn="HackNerdFont-9"
+_nb="#262626"
+_nf="#d0d0d0"
+_sb="#f19618"
+_sf="#424242"
 
+#FONT="-fn $_fn"
+COLORS="-nb "$_nb" -nf "$_nf" -sb "$_sb" -sf "$_sf""
+OPTS="-b"
+
+CONF="$OPTS $COLORS"

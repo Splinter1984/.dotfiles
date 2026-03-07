@@ -1,5 +1,4 @@
-#!/bin/bash
-set -ux
+#!/usr/bin/env bash
 
 volume_source_up() {
     MUTE=$(get_is_muted)
@@ -53,13 +52,13 @@ get_default_source() {
 }
 
 case "$1" in
-  --mute_source)
+  -mut)
     mute_source
   ;;
-  --volume_source_up)
+  -inc)
     volume_source_up
   ;;
-  --volume_source_down)
+  -dec)
     volume_source_down
   ;;
   *)

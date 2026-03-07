@@ -9,18 +9,18 @@ augroup END
 
 function! ApplyColors(timer) abort
 
-  hi Comment      ctermfg=8
-  hi Constant     ctermfg=4
-  hi String       ctermfg=6
-  hi Character    ctermfg=6
-  hi Boolean      ctermfg=5
-  hi Identifier   ctermfg=4
-  hi Function     ctermfg=2
-  hi Statement    ctermfg=1
-  hi PreProc      ctermfg=2
-  hi Type         ctermfg=3
-  hi Special      ctermfg=2
-  hi SpecialChar  ctermfg=5
+  hi Comment        ctermfg=8
+  hi Constant       ctermfg=4
+  hi String         ctermfg=6
+  hi Character      ctermfg=6
+  hi Boolean        ctermfg=5
+  hi Identifier     ctermfg=4
+  hi Function       ctermfg=2
+  hi Statement      ctermfg=1
+  hi PreProc        ctermfg=2
+  hi Type           ctermfg=3
+  hi Special        ctermfg=2
+  hi SpecialChar    ctermfg=5
 
   hi Added          ctermfg=2    ctermbg=none
   hi Changed        ctermfg=5    ctermbg=none

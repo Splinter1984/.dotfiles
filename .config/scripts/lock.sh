@@ -1,3 +1,6 @@
 #!/bin/bash
+set -ux
 
-env XSECURELOCK_PASSWORD_PROMPT=time_hex xsecurelock
+XSECURELOCK_PASSWORD_PROMPT=time_hex \
+XSECURELOCK_DISCARD_FIRST_KEYPRESS=0 \
+  xsecurelock

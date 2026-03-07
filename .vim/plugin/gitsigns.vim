@@ -9,14 +9,7 @@ augroup GitSignsAuto | autocmd!
 augroup END
 
 " Define signs (once)
-" sign define GitAdded    text=+ texthl=LineNr
-" sign define GitRemoved  text=- texthl=LineNr
-" sign define GitChanged  text=~ texthl=LineNr
-
-" sign define GitAdded    text=+ texthl=DiffAdd
-" sign define GitRemoved  text=- texthl=DiffDelete
-" sign define GitChanged  text=~ texthl=DiffChange
-
+"
 sign define GitAdded    text=┃ texthl=DiffAdd
 sign define GitRemoved  text=┃ texthl=DiffDelete
 sign define GitChanged  text=┃ texthl=DiffChange

@@ -22,19 +22,6 @@ cond="Connected"
 pard="Paired"
 trsd="Trusted"
 
-asw1=(Yes yes y ys)
-asw2=(No  no  n nn)
-
-opt0_power_on="Device\nPower\nDiscover\nPair\n"
-opt0_power_off="Power"
-prompt0="Bluetooth"
-prompt1="Device"
-
-ask() {
-  result=$(echo -e "$1" | dmenu -i -p "$2" $COLORS $FONT)
-  [[ -n "$result" ]] && echo -e "$result"
-}
-
 ##################################################
 # usefull methods
 ##################################################
@@ -155,17 +142,19 @@ cond_toogle() {
   if is_info $1 $cond; then
     ret=$(bluetoothctl disconnect $1 | tr '[:upper:]' '[:lower:]' | grep -Po 'successful' | wc -w)
     [[ "$ret" -ne "0" ]] && \
-      dunstify "$(echo -e $ysbl_ico) disconnected" \
-        "$1" \
+      dunstify "$(echo -e $ysbl_ico) disconnected ($(get_devname $1))" \
         -u low \
         -h string:synchronous:bluetooth_cond
   else
     ret=$(bluetoothctl connect $1 | tr '[:upper:]' '[:lower:]' | grep -Po 'successful' | wc -w)
     [[ "$ret" -ne "0" ]] && \
-      dunstify "$(echo -e $ysbl_ico) connected" \
-        "$1" \
+      dunstify "$(echo -e $ysbl_ico) connected ($(get_devname $1))" \
         -u low \
         -h string:synchronous:bluetooth_cond
+      #   || \
+      # dunstify "$(echo -e $nobl_ico) ($(get_devname $1)) connection failed" \
+      #   -u normal \
+      #   -h string:synchronous:bluetooth_cond
   fi
 }
 
@@ -173,15 +162,13 @@ pard_toogle() {
   if is_info $1 $pard; then
     ret=$(bluetoothctl remove $1 | tr '[:upper:]' '[:lower:]' | grep -Po 'successful' | wc -w)
     [[ "$ret" -ne "0" ]] && \
-      dunstify "$(echo -e $ysbl_ico) removed" \
-        $(get_devname $1) \
+      dunstify "$(echo -e $ysbl_ico) removed ($(get_devname $1))" \
         -u low \
         -h string:synchronous:bluetooth_pard
   else
     ret=$(bluetoothctl pair $1 | tr '[:upper:]' '[:lower:]' | grep -Po 'successful' | wc -w)
     [[ "$ret" -ne "0" ]] && \
-      dunstify "$(echo -e $ysbl_ico) paired" \
-        $(get_devname $1) \
+      dunstify "$(echo -e $ysbl_ico) paired ($(get_devname $1))" \
         -u low \
         -h string:synchronous:bluetooth_pard
   fi
@@ -191,24 +178,59 @@ pard_toogle() {
 # main
 ##################################################
 
-# a1=""
-# if is_enabled $powr; then
-#   a1=$(ask "$opt0_power_off" "$prompt0" | tr -d '[:space:]')
-# else
-#   a1=$(ask "$opt0_power_on" "$prompt0"  | tr -d '[:space:]')
-# fi
+asw1=(Yes yes y ys)
+asw2=(No  no  n nn)
 
-# case "$a1" in
-#   "Device")
-#     ;;
-#   "Power")
-#     ;;
-#   "Discover")
-#     ;;
-#   "Pair")
-#     ;;
-# esac
+opt0_power_on="Device\nPower_off"
+opt0_power_off="Power_on"
 
+prompt0="Bluetooth"
+prompt1="Device"
 
+ask() {
+  result=$(echo -e "$1" | dmenu -i -p "$2" $CONF)
+  [[ -n "$result" ]] && echo -e "$result"
+}
 
-"$@" # debug
+a1=""
+if is_enabled $powr; then
+  a1=$(ask "$opt0_power_on" "$prompt0" | tr -d '[:space:]')
+else
+  a1=$(ask "$opt0_power_off" "$prompt0"  | tr -d '[:space:]')
+fi
+
+case "$a1" in
+  "Device")
+    dev_uuid=($(get_devlist))
+    dev_nams=()
+    dev_prompt=""
+    for i in "${!dev_uuid[@]}"; do
+      dev_prompt+="$(get_devname ${dev_uuid[$i]})\n"
+      dev_nams+=($(get_devname ${dev_uuid[$i]}))
+    done
+    dev=$(ask "$dev_prompt" "$a1")
+    dev_prompt=""
+    for i in "${!dev_uuid[@]}"; do
+      if [[ "$dev" == "$(get_devname ${dev_uuid[$i]})" ]]; then
+        if is_info ${dev_uuid[$i]} $cond; then
+          dev_prompt+="Disconnect\n"; else dev_prompt+="Connect\n"; fi
+        if is_info ${dev_uuid[$i]} $trsd; then
+          dev_prompt+="Untrust\n";    else dev_prompt+="Trust\n";   fi
+        if is_info ${dev_uuid[$i]} $pard; then
+          dev_prompt+="Unpair\n";     else dev_prompt+="Pair\n";    fi
+
+        ans=$(ask "$dev_prompt" "Command" | tr -d '[:space:]')
+        case "$ans" in
+          "Connect" | "Disconnect") cond_toogle "${dev_uuid[$i]}" ;;
+          "Trust"   | "Untrust"   ) trsd_toogle "${dev_uuid[$i]}" ;;
+          "Pair"    | "Unpair"    ) pard_toogle "${dev_uuid[$i]}" ;;
+        esac
+      fi
+    done
+    ;;
+  "Power_on" | "Power_off")
+    powr_toogle
+    ;;
+esac
+
+#"$@" # debug
